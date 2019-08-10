@@ -13,11 +13,6 @@ namespace ShoeStore.Items
     class clsItemsSQL
     {
         /// <summary>
-        /// database connection string
-        /// </summary>
-        private string sConnectionString;
-
-        /// <summary>
         /// sql statement string
         /// </summary>
         private string SQL;
@@ -32,10 +27,15 @@ namespace ShoeStore.Items
         /// </summary>
         DataSet ds;
 
+        /// <summary>
+        /// create instance of the data access class
+        /// </summary>
+        ShoeStore.clsDataAccess db;
+
         public clsItemsSQL()
         {
             ds = new DataSet();
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
+            db = new ShoeStore.clsDataAccess();
         }
 
         /// <summary>
@@ -48,10 +48,8 @@ namespace ShoeStore.Items
             {
                 SQL = "SELECT * FROM ItemDesc";
 
-                ds = ExcecuteSQLStatement(SQL, ref rows);
-        
-                //return the DataSet
-                return ds;
+                return db.ExecuteSQLStatement(SQL, ref rows);
+
             }
             catch (Exception ex)
             {
@@ -64,13 +62,13 @@ namespace ShoeStore.Items
         /// </summary>
         /// <param name="cost"></param>
         /// <param name="desc"></param>
-        public void AddItems(string cost, string desc)
+        public void AddItems(int cost, string desc)
         {
             try
             {
-                SQL = "INSERT INTO ItemDesc (ItemDesc, Cost)" +
-                    "VALUES (" + desc + ", " + cost + "";
-                ds = ExcecuteSQLStatement(SQL, ref rows);
+                SQL = "INSERT INTO ItemDesc (ItemDesc, Cost) " +
+                    "VALUES ('" + desc + "', " + cost + ")";
+                int test = db.ExecuteNonQuery(SQL);
             }
             catch (Exception ex)
             {
@@ -84,14 +82,14 @@ namespace ShoeStore.Items
         /// <param name="cost"></param>
         /// <param name="desc"></param>
         /// <param name="code"></param>
-        public void EditItems(string cost, string desc, string code)
+        public void EditItems(int cost, string desc, int code)
         {
             try
             {
-                SQL = "UPDATE ItemDesc" +
-                    "SET Cost = " + cost + ", ItemDesc = " + desc + "" +
+                SQL = "UPDATE ItemDesc " +
+                    "SET Cost = " + cost + ", ItemDesc = '" + desc + "' " +
                     "WHERE ItemCode = " + code + "";
-                ds = ExcecuteSQLStatement(SQL, ref rows);
+                int test = db.ExecuteNonQuery(SQL);
             }
             catch (Exception ex)
             {
@@ -104,18 +102,18 @@ namespace ShoeStore.Items
         /// </summary>
         /// <param name="code"></param>
         /// <returns>coonfirmation of deletion</returns>
-        public string DeleteItems(string code)
+        public string DeleteItems(int code)
         {
             try
             {
-                SQL = "SELECT LI.LineItemNum FROM LineItems as LI" +
+                SQL = "SELECT LI.LineItemNum FROM LineItems as LI " +
                     "WHERE LI.ItemCode = " + code + "";
-                ds = ExcecuteSQLStatement(SQL, ref rows);
+                ds = db.ExecuteSQLStatement(SQL, ref rows);
                 if (rows == 0)
                 {
-                    SQL = "DELETE FROM ItemDesc" +
+                    SQL = "DELETE FROM ItemDesc " +
                         "WHERE ItemCode = " + code + "";
-                    ds = ExcecuteSQLStatement(SQL, ref rows);
+                    int test = db.ExecuteNonQuery(SQL);
                     return "";
                 }
                 else
@@ -127,39 +125,6 @@ namespace ShoeStore.Items
             }
         }
 
-        /// <summary>
-        /// this function interacts with the databaase with the sql statement passed in a returns a dataset and row count
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="retval"></param>
-        /// <returns>dataset for datagrid</returns>
-        public DataSet ExcecuteSQLStatement(string sql, ref int retval)
-        {
-            try
-            {
-                DataSet d = new DataSet();
 
-                using (OleDbConnection con = new OleDbConnection(sConnectionString))
-                {
-                    using (OleDbDataAdapter adapt = new OleDbDataAdapter())
-                    {
-                        con.Open();
-
-                        adapt.SelectCommand = new OleDbCommand(sql, con);
-                        adapt.SelectCommand.CommandTimeout = 0;
-
-                        adapt.Fill(d);
-
-                    }
-                }
-                retval = d.Tables[0].Rows.Count;
-
-                return d;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
     }
 }
