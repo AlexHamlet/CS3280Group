@@ -32,7 +32,13 @@ namespace mainWindow
         //declare the edit window
         wndItems ItemsWindow;
 
+
+        //this is where the main logic of the window lives
         clsMainLogic MainLogic;
+
+        //this is where all the selected invoices items are stored
+        List<clsLineItems> MyList;
+
 
         //declares the is full bool value
         bool isFull;
@@ -50,7 +56,13 @@ namespace mainWindow
 
             isFull = MainLogic.IsDataBaseFull();
 
-            UpdateDataGrid();
+            MyList = new List<clsLineItems>();
+
+            //main = this;
+            cbItems.ItemsSource = MainLogic.listItems();
+
+            dgAll_Items.ItemsSource = MyList;
+
 
 
             ItemsWindow = new wndItems();        //initializes the EditWindow
@@ -64,12 +76,23 @@ namespace mainWindow
         /// displays all the info to the data grid 
         /// function should be called every time there is a edit to the data that is saved.
         /// </summary>
-        private void UpdateDataGrid()
+        private void UpdateDisplays()
         {
             try
             {
                 //display all info on data grid
-                All_InvoicesDataGrid.ItemsSource = MainLogic.Invoices();
+                dgAll_Items.Items.Refresh();
+
+                double totalCost = 0;
+
+                foreach (var item in MyList)
+                {
+                    totalCost += (item.Cost * item.LineItemNum);
+                }
+
+                TotalCostLabel.Content = totalCost;
+
+
             }
             catch (Exception ex)
             {
@@ -199,11 +222,11 @@ namespace mainWindow
         /// <param name="e"></param>
         private void SearchTab_Click(object sender, RoutedEventArgs e)
         {
-            
 
-            this.Close();
+
+            this.Hide();
             SearchWindow.Show();
-           
+
         }
 
         /// <summary>
@@ -213,9 +236,28 @@ namespace mainWindow
         /// <param name="e"></param>
         private void ItemsTab_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
             ItemsWindow.Show();
-            
+
+        }
+
+
+        private void SaveItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var Item = cbItems.SelectedValue as clsLineItems;
+                Int32.TryParse(AmountOfItems.Text, out int x);
+                Item.LineItemNum = x;
+                MyList.Add(Item);
+
+                UpdateDisplays();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
     }
 }

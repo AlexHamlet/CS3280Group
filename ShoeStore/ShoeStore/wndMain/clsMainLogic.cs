@@ -11,7 +11,7 @@ namespace mainWindow
     class clsMainLogic
     {
         //declare a list of all the items in the database for the data grid
-        List<clsInvoice> MyList;
+        List<clsLineItems> MyList;
 
 
 
@@ -35,13 +35,13 @@ namespace mainWindow
         /// gets all the invoices()
         /// </summary>
         /// <returns></returns>
-        public List<clsInvoice> Invoices()
+        public List<clsLineItems> listItems()
         {
 
             try
             {
-                return Query.GetInvoices();
-               
+                return Query.GetItems();
+
             }
             catch (Exception ex)
             {
@@ -55,12 +55,12 @@ namespace mainWindow
         /// </summary>
         /// <param name="date"></param>
         /// <param name="Line"></param>
-        public void CreateInvoice(string date, ShoeStore.wndMain.clsLineItems Line)
+        public void CreateInvoice(string date)
         {
 
             try
             {
-                Query.CreateInvoice(date, Line);
+                Query.CreateInvoice(date);
             }
             catch (Exception ex)
             {

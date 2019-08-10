@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ShoeStore.Search;
 
+
 namespace mainWindow
 {
 
@@ -17,8 +18,7 @@ namespace mainWindow
     /// </summary>
     class clsMainSQL
     {
-
-        private string sConnectionString;
+        ShoeStore.clsDataAccess db;
 
 
         /// <summary>
@@ -26,7 +26,8 @@ namespace mainWindow
         /// </summary>
         public clsMainSQL()
         {
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
+            db = new ShoeStore.clsDataAccess();
+
         }
 
 
@@ -35,27 +36,30 @@ namespace mainWindow
         /// <summary>
         /// this returns a all invoices
         /// </summary>
-        public List<clsInvoice> GetInvoices()
+        public List<clsLineItems> GetItems()
         {
             try
             {
-                List<clsInvoice> lstInvoices = new List<clsInvoice>();
+                List<clsLineItems> lstItems = new List<clsLineItems>();
 
                 int rows = 0;
-                string SQL = "Select * From Invoices";
-                DataSet rawdata = ExcecuteSQLStatement(SQL, ref rows);
+                string SQL = "Select * From ItemDesc";
+                DataSet rawdata = db.ExecuteSQLStatement(SQL, ref rows);
 
-                int id;
-                double total;
+
                 for (int x = 0; x < rows; x++)
                 {
-                    Int32.TryParse(rawdata.Tables[0].Rows[x][0].ToString(), out id);
-                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out total);
+                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
 
-                    lstInvoices.Add(new clsInvoice(id, rawdata.Tables[0].Rows[x][1].ToString(), total));
+                    lstItems.Add(new clsLineItems
+                    {
+                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
+                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
+                        Cost = total
+                    });
                 }
 
-                return lstInvoices;
+                return lstItems;
             }
             catch (Exception ex)
             {
@@ -64,22 +68,59 @@ namespace mainWindow
             }
         }
 
+        public List<clsLineItems> getLineItems(int invoiceId)
+        {
+            try
+            {
+                List<clsLineItems> lstItems = new List<clsLineItems>();
+
+                int rows = 0;
+                string SQL = "Select a.ItemCode, a.ItemDesc, a.Cost, b.LineItemNum" +
+                    "From ItemDesc AS a JOIN LineItems as b ON a.ItemCode = b.ItemCode WHERE InvoiceNum = " + invoiceId.ToString();
+                DataSet rawdata = db.ExecuteSQLStatement(SQL, ref rows);
+
+
+                for (int x = 0; x < rows; x++)
+                {
+                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
+                    Int32.TryParse(rawdata.Tables[0].Rows[x][3].ToString(), out int num);
+                    lstItems.Add(new clsLineItems
+                    {
+                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
+                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
+                        Cost = total,
+                        LineItemNum = num
+
+                    });
+                }
+
+                return lstItems;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+
+
         /// <summary>
         /// creates a new invoice
         /// </summary>
         /// <param name="Date"></param>
         /// <param name="line"></param>
-        public void CreateInvoice(string Date, ShoeStore.wndMain.clsLineItems line)
+        public void CreateInvoice(string Date)
         {
             try
             {
                 string sSQL = "INSERT INTO Invoice VALUES @Date, @TotalCost";
-                ExecuteNonQuery(sSQL);
+                db.ExecuteNonQuery(sSQL);
 
 
                 //gets the id of the last data entered
                 sSQL = "SELECT SCOPE_IDENTITY()";
-                Int32.TryParse(ExecuteScalarSQL(sSQL), out int InvoiceNumber);
+                Int32.TryParse(db.ExecuteScalarSQL(sSQL), out int InvoiceNumber);
 
 
 
@@ -115,7 +156,7 @@ namespace mainWindow
 
 
                 string sSQL = "DELETE FROM Invoices WHERE InvoiceNum = @IDNum";
-                ExecuteNonQuery(sSQL);
+                db.ExecuteNonQuery(sSQL);
 
 
             }
@@ -138,7 +179,7 @@ namespace mainWindow
 
                 string sSQL = "UPDATE Invoices SET InvoiceDate = @UpdatedInvoice.InvoiceDate,"
                               + " TotalCost = @UpdatedInvoice.TotalCost WHERE InvoiceNum = @UpdatedInvoice.InvoiceNum;";
-                ExecuteNonQuery(sSQL);
+                db.ExecuteNonQuery(sSQL);
 
 
             }
@@ -160,8 +201,8 @@ namespace mainWindow
             try
             {
                 string sSQL = "SELECT COUNT(*) FROM Invoices;";
-                
-                Int32.TryParse(ExecuteScalarSQL(sSQL), out int num);
+
+                Int32.TryParse(db.ExecuteScalarSQL(sSQL), out int num);
 
 
 
@@ -178,132 +219,6 @@ namespace mainWindow
         }
 
 
-
-        #region data access class
-
-
-
-        /// <summary>
-        /// Used to execute all SQL commands.
-        /// </summary>
-        /// <param name="sql">SQL command</param>
-        /// <param name="retval">Number of resulting rows</param>
-        /// <returns>A Dataset result of the command</returns>
-        public DataSet ExcecuteSQLStatement(string sql, ref int retval)
-        {
-            try
-            {
-                DataSet d = new DataSet();
-
-                using (OleDbConnection con = new OleDbConnection(sConnectionString))
-                {
-                    using (OleDbDataAdapter adapt = new OleDbDataAdapter())
-                    {
-                        con.Open();
-
-                        adapt.SelectCommand = new OleDbCommand(sql, con);
-                        adapt.SelectCommand.CommandTimeout = 0;
-
-                        adapt.Fill(d);
-
-                    }
-                }
-                retval = d.Tables[0].Rows.Count;
-
-                return d;
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// This method takes an SQL statement that is passed in and executes it.  The resulting single 
-        /// value is returned.
-        /// </summary>
-        /// <param name="sSQL">The SQL statement to be executed.</param>
-        /// <returns>Returns a string from the scalar SQL statement.</returns>
-        public string ExecuteScalarSQL(string sSQL)
-        {
-            try
-            {
-                //Holds the return value
-                object obj;
-
-                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
-                {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-
-                        //Open the connection to the database
-                        conn.Open();
-
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Execute the scalar SQL statement
-                        obj = adapter.SelectCommand.ExecuteScalar();
-                    }
-                }
-
-                //See if the object is null
-                if (obj == null)
-                {
-                    //Return a blank
-                    return "";
-                }
-                else
-                {
-                    //Return the value
-                    return obj.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// This method takes an SQL statement that is a non query and executes it.
-        /// </summary>
-        /// <param name="sSQL">The SQL statement to be executed.</param>
-        /// <returns>Returns the number of rows affected by the SQL statement.</returns>
-        public int ExecuteNonQuery(string sSQL)
-        {
-            try
-            {
-                //Number of rows affected
-                int iNumRows;
-
-                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
-                {
-                    //Open the connection to the database
-                    conn.Open();
-
-                    //Add the information for the SelectCommand using the SQL statement and the connection object
-                    OleDbCommand cmd = new OleDbCommand(sSQL, conn);
-                    cmd.CommandTimeout = 0;
-
-                    //Execute the non query SQL statement
-                    iNumRows = cmd.ExecuteNonQuery();
-                }
-
-                //return the number of rows affected
-                return iNumRows;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-
-
-
-        #endregion
 
 
     }
