@@ -53,7 +53,9 @@ namespace ShoeStore.Items
         {
             try
             {
-                query.AddItems(cost, desc);
+                int result = 0;
+                Int32.TryParse(cost, out result);
+                query.AddItems(result, desc);
             }
             catch (Exception ex)
             {
@@ -71,7 +73,11 @@ namespace ShoeStore.Items
         {
             try
             {
-                query.EditItems(cost, desc, code);
+                int resultCost = 0;
+                int resultCode = 0;
+                Int32.TryParse(cost, out resultCost);
+                Int32.TryParse(code, out resultCode);
+                query.EditItems(resultCost, desc, resultCode);
             }
             catch (Exception ex)
             {
@@ -88,8 +94,10 @@ namespace ShoeStore.Items
         {
             try
             {
+                int resultCode = 0;
+                Int32.TryParse(code, out resultCode);
                 string test;
-                test = query.DeleteItems(code);
+                test = query.DeleteItems(resultCode);
                 return test;
             }
             catch (Exception ex)

@@ -68,33 +68,16 @@ namespace mainWindow
             }
         }
 
-        public List<clsLineItems> getLineItems(int invoiceId)
+        public string getLineItems(int invoiceId)
         {
             try
             {
-                List<clsLineItems> lstItems = new List<clsLineItems>();
 
-                int rows = 0;
-                string SQL = "Select a.ItemCode, a.ItemDesc, a.Cost, b.LineItemNum" +
-                    "From ItemDesc AS a JOIN LineItems as b ON a.ItemCode = b.ItemCode WHERE InvoiceNum = " + invoiceId.ToString();
-                DataSet rawdata = db.ExecuteSQLStatement(SQL, ref rows);
+                string SQL = "Select a.ItemCode, a.ItemDesc, a.Cost, b.LineItemNum " +
+                    "From ItemDesc AS a INNER JOIN LineItems as b ON a.ItemCode = b.ItemCode WHERE InvoiceNum = " + invoiceId.ToString();
 
+                return SQL;
 
-                for (int x = 0; x < rows; x++)
-                {
-                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
-                    Int32.TryParse(rawdata.Tables[0].Rows[x][3].ToString(), out int num);
-                    lstItems.Add(new clsLineItems
-                    {
-                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
-                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
-                        Cost = total,
-                        LineItemNum = num
-
-                    });
-                }
-
-                return lstItems;
             }
             catch (Exception ex)
             {
@@ -110,29 +93,13 @@ namespace mainWindow
         /// </summary>
         /// <param name="Date"></param>
         /// <param name="line"></param>
-        public void CreateInvoice(string Date)
+        public string CreateInvoice(string Date, string Cost)
         {
             try
             {
-                string sSQL = "INSERT INTO Invoice VALUES @Date, @TotalCost";
-                db.ExecuteNonQuery(sSQL);
+                string sSQL = "INSERT INTO Invoices (InvoiceDate, TotalCost) VALUES ( '" + Date + "' , " + Cost + " )";
 
-
-                //gets the id of the last data entered
-                sSQL = "SELECT SCOPE_IDENTITY()";
-                Int32.TryParse(db.ExecuteScalarSQL(sSQL), out int InvoiceNumber);
-
-
-
-                //add all line items from the invoice into the ListItemsTable
-                //foreach (var item in line)
-                //{
-                //parse out all the items in the line Item list
-
-                //sSQL = "INSERT INTO LineItems VALUES @InvoiceNumber, @LineItemNumber, @ItemCode";
-                //  db.ExecuteNonQuery(sSQL);
-                //}
-
+                return sSQL;
 
             }
             catch (Exception ex)
@@ -149,15 +116,15 @@ namespace mainWindow
         /// <summary>
         /// this deletes the invoice with specified id number
         /// </summary>
-        public void DeleteInvoice(int IDNum)
+        public string DeleteInvoice(int IDNum)
         {
             try
             {
 
 
-                string sSQL = "DELETE FROM Invoices WHERE InvoiceNum = @IDNum";
-                db.ExecuteNonQuery(sSQL);
+                string sSQL = "DELETE FROM Invoices WHERE InvoiceNum = " + IDNum.ToString();
 
+                return sSQL;
 
             }
             catch (Exception ex)
@@ -171,15 +138,16 @@ namespace mainWindow
         /// <summary>
         /// this updates selected invoice
         /// </summary>
-        public void UpdateInvoice(clsInvoice UpdatedInvoice)
+        public string UpdateInvoice(int id, string date, string cost)
         {
             try
             {
 
 
-                string sSQL = "UPDATE Invoices SET InvoiceDate = @UpdatedInvoice.InvoiceDate,"
-                              + " TotalCost = @UpdatedInvoice.TotalCost WHERE InvoiceNum = @UpdatedInvoice.InvoiceNum;";
-                db.ExecuteNonQuery(sSQL);
+                string sSQL = "UPDATE Invoices SET InvoiceDate = '"+ date + "' TotalCost = " + cost 
+                              + "WHERE InvoiceNum = " +id.ToString() + ";";
+                return sSQL;
+
 
 
             }
@@ -189,6 +157,21 @@ namespace mainWindow
                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
 
+        }
+
+        public string InsertLineItems(int id, clsLineItems Item)
+        {
+            try
+            {
+                string sSQL = "INSERT INTO LineItems VALUES (" + id.ToString() + ","
+                    + Item.LineItemNum.ToString() + ", \"" + Item.ItemCode.ToString() + "\")";
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
 
 
@@ -196,17 +179,16 @@ namespace mainWindow
         /// returns the count of how many invoices there are
         /// </summary>
         /// <returns></returns>
-        public int GetCountOfInvoices()
+        public string GetCountOfInvoices()
         {
             try
             {
                 string sSQL = "SELECT COUNT(*) FROM Invoices;";
 
-                Int32.TryParse(db.ExecuteScalarSQL(sSQL), out int num);
 
 
 
-                return num;
+                return sSQL;
             }
             catch (Exception ex)
             {
@@ -219,6 +201,53 @@ namespace mainWindow
         }
 
 
+
+
+        /// <summary>
+        /// deletes from line items the objects with the invoices of id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string DeleteLineItems(int id)
+        {
+            try
+            {
+                string sSQL = "DELETE FROM LineItems where InvoiceNum = " + id.ToString();
+
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Finds the last inserted invoices id
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        public string GetInsertedInvoiceId(string date, string cost)
+        {
+            try
+            {
+                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate >= " + date + " AND  TotalCost = " + cost;
+
+                //SELECT InvoiceNum FROM Invoices 
+                //WHERE InvoiceDate >= 5 / 19 / 2018
+                //AND(InvoiceDate < (5 / 19 / 2018 + interval 1 day))
+                //AND TotalCost = 20
+
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
 
 
     }

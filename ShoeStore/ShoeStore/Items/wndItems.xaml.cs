@@ -28,19 +28,25 @@ namespace ShoeStore.Items
         /// </summary>
         clsItemsLogic ItemsLogic;
 
+        
+        /// <summary>
+        /// create main window object for closing items window
+        /// </summary>
+        mainWindow.MainWindow main;
+
         /// <summary>
         /// creatte a dataset object for the datagrid
         /// </summary>
         DataSet ds;
-        
+
 
         public wndItems()
         {
             InitializeComponent();
             ItemsLogic = new clsItemsLogic();
+            main = mainWindow.MainWindow.main;
             ds = new DataSet();
             UpdateDG();
-            //dgItems.ItemsSource = ds.Tables; // ds.Tables[1].DefaultView;
 
         }
 
@@ -51,8 +57,11 @@ namespace ShoeStore.Items
         {
             try
             {
+                dgItems.ItemsSource = null;
                 ds = ItemsLogic.UpdateDG();
+
                 dgItems.ItemsSource = ds.Tables[0].DefaultView;
+                
             }
             catch (Exception ex)
             {
@@ -69,6 +78,11 @@ namespace ShoeStore.Items
         {
             try
             {
+                if (txtCost.Text == null || txtDesc == null)
+                {
+                    txtWarning.Text = "Must fill Cost and Description to Add.";
+                    return;
+                }
                 ItemsLogic.AddItem(txtCost.Text, txtDesc.Text);
                 UpdateDG();
             }
@@ -88,7 +102,7 @@ namespace ShoeStore.Items
             try
             {
                 DataRowView row = (DataRowView)dgItems.SelectedItem;
-                
+
                 ItemsLogic.EditItem(txtCost.Text, txtDesc.Text, row[0].ToString());
                 UpdateDG();
             }
@@ -106,10 +120,11 @@ namespace ShoeStore.Items
             try
             {
                 string sDeleted;
-                IList row = (IList)dgItems.SelectedItem;
+                DataRowView row = (DataRowView)dgItems.SelectedItem;
                 sDeleted = ItemsLogic.DeleteItem(row[0].ToString());
-                UpdateDG();
                 txtWarning.Text = sDeleted;
+                UpdateDG();
+
             }
             catch (Exception ex)
             {
@@ -117,10 +132,30 @@ namespace ShoeStore.Items
             }
         }
 
+        /// <summary>
+        /// Datagrid selection has changed. get the new information from the selected item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //txtCost.Text = sender. ;
-            txtDesc.Text = dgItems.SelectedCells[1].ToString();
+            if (dgItems.SelectedItem == null)
+                return;
+            DataRowView rowview = dgItems.SelectedItem as DataRowView;
+            txtCost.Text = rowview[2].ToString();
+            txtDesc.Text = rowview[1].ToString();
+        }
+
+        /// <summary>
+        /// don't close the window, hide it so the main can show it in the future
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+            //main.Show();
         }
     }
 }
