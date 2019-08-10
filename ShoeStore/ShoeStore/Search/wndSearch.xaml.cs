@@ -130,5 +130,11 @@ namespace ShoeStore.Search
                 MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
     }
 }

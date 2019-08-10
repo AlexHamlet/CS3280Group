@@ -15,7 +15,7 @@ namespace ShoeStore.Search
         /// <summary>
         /// Contains the InvoiceID of the Invoice Object
         /// </summary>
-        public int InvoiceID { get { return id; } }
+        public int InvoiceID { get { return id; } set => this.id = value; }
         /// <summary>
         /// Contains the InvoiceDate of the Invoice Object
         /// </summary>

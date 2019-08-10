@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoeStore.Search"
         mc:Ignorable="d"
-        Title="wndSearch" Height="344.4" Width="794">
+        Title="wndSearch" Height="344.4" Width="794" Closing="Window_Closing">
   <Grid>
     <GroupBox Header="Invoices" HorizontalAlignment="Left" Height="248" Margin="10,10,0,0" VerticalAlignment="Top" Width="545">
       <DataGrid x:Name="dgInvoices" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="535" Margin="0,0,-2.2,-12.4" SelectionMode="Single"/>
