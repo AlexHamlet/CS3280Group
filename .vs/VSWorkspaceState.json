@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ShoeStore",
+    "\\ShoeStore\\ShoeStore",
+    "\\ShoeStore\\ShoeStore\\Items",
+    "\\ShoeStore\\ShoeStore\\Search"
+  ],
+  "SelectedNode": "\\ShoeStore\\ShoeStore\\Items\\clsItemsLogic.cs",
+  "PreviewInSolutionExplorer": false
+}
