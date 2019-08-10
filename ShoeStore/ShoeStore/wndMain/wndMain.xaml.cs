@@ -68,6 +68,19 @@ namespace mainWindow
             ItemsWindow = new wndItems();        //initializes the EditWindow
 
             SearchWindow = new wndSearch();  //initializes the SearchWindow
+
+
+            
+        }
+
+        /// <summary>
+        /// closes the program
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosed(EventArgs e)
+        { 
+
+            Environment.Exit(0);
         }
 
 
@@ -222,10 +235,12 @@ namespace mainWindow
         /// <param name="e"></param>
         private void SearchTab_Click(object sender, RoutedEventArgs e)
         {
-
+            
 
             this.Hide();
-            SearchWindow.Show();
+            SearchWindow.ShowDialog();
+            //SearchWindow.SelectedInvoice;
+            this.Show();
 
         }
 
@@ -237,7 +252,8 @@ namespace mainWindow
         private void ItemsTab_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            ItemsWindow.Show();
+            ItemsWindow.ShowDialog();
+            this.Show();
 
         }
 
