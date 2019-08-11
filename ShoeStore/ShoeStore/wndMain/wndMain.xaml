@@ -5,27 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid x:Name="Save">
+        Title="MainWindow" Height="450" Width="714">
+    <Grid x:Name="Save" Margin="0,0,2,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,245,0,0" VerticalAlignment="Top" Width="245"/>
-        <Button x:Name="CreateInvoice" Content="Create" HorizontalAlignment="Left" Margin="520,230,0,0" VerticalAlignment="Top" Width="75" Click="CreateInvoice_Click"/>
-        <Button x:Name="EditInvoice" Content="Edit" HorizontalAlignment="Left" Margin="520,310,0,0" VerticalAlignment="Top" Width="76" Click="EditInvoice_Click"/>
-        <Button x:Name="DeleteInvoice" Content="Delete" HorizontalAlignment="Left" Margin="520,352,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoice_Click"/>
+        <GroupBox Header="Items" HorizontalAlignment="Left" Height="170" Margin="22,173,0,0" VerticalAlignment="Top" Width="615">
+            <Label x:Name="TotalCostLabel" Content="Total Cost: " HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-0.2"/>
+        </GroupBox>
+
+
+        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,188,0,0" VerticalAlignment="Top" Width="290"/>
+        <Button x:Name="CreateInvoice" Content="Create" HorizontalAlignment="Left" Margin="360,65,0,0" VerticalAlignment="Top" Width="75" Click="CreateInvoice_Click"/>
+        <Button x:Name="EditInvoice" Content="Edit" HorizontalAlignment="Left" Margin="474,65,0,0" VerticalAlignment="Top" Width="76" Click="EditInvoice_Click"/>
+        <Button x:Name="DeleteInvoice" Content="Delete" HorizontalAlignment="Left" Margin="474,106,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoice_Click"/>
         <Menu x:Name="MenuTabs" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" FontSize="15">
             <MenuItem x:Name="searchTab" Header="Search" Width="54" StaysOpenOnClick="True" Click="SearchTab_Click"/>
             <MenuItem x:Name="itemsTab" Header="Items" Width="55" Click="ItemsTab_Click"/>
         </Menu>
-        <DatePicker x:Name="MainWndDateTimePicker" HorizontalAlignment="Left" Margin="30,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.029,1.042"/>
-        <Label x:Name="InvoiceIdLabel" Content="InvoiceId" HorizontalAlignment="Left" Margin="30,55,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.658,-0.192"/>
-        <ComboBox x:Name="cbItems" HorizontalAlignment="Left" Margin="30,245,0,0" VerticalAlignment="Top" Width="185"/>
-        <TextBox x:Name="AmountOfItems" HorizontalAlignment="Left" Height="23" Margin="95,302,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="SaveItem" Content="Add Item" HorizontalAlignment="Left" Margin="95,352,0,0" VerticalAlignment="Top" Width="75" Click="SaveItem_Click"/>
-        <Button x:Name="SaveInvoice" Content="Save Invoice" HorizontalAlignment="Left" Margin="520,270,0,0" VerticalAlignment="Top" Width="75" IsTabStop="False" RenderTransformOrigin="0.067,0" Click="SaveInvoice_Click"/>
-        <TextBox x:Name="TotalCostTextBox" HorizontalAlignment="Left" Height="23" Margin="360,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <DatePicker x:Name="MainWndDateTimePicker" HorizontalAlignment="Left" Margin="145,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.029,1.042"/>
+        <Label x:Name="InvoiceIdLabel" Content="InvoiceId" HorizontalAlignment="Left" Margin="22,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.658,-0.192"/>
+        <ComboBox x:Name="cbItems" HorizontalAlignment="Left" Margin="30,205,0,0" VerticalAlignment="Top" Width="185"/>
+        <TextBox x:Name="AmountOfItems" HorizontalAlignment="Left" Height="23" Margin="30,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185"/>
+        <Button x:Name="SaveItem" Content="Add Item" HorizontalAlignment="Left" Margin="540,247,0,0" VerticalAlignment="Top" Width="75" Click="SaveItem_Click"/>
+        <Button x:Name="SaveInvoice" Content="Save Invoice" HorizontalAlignment="Left" Margin="360,107,0,0" VerticalAlignment="Top" Width="75" IsTabStop="False" RenderTransformOrigin="0.067,0" Click="SaveInvoice_Click"/>
+        <TextBox x:Name="TotalCostTextBox" HorizontalAlignment="Left" Height="23" Margin="110,292,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
 
 
     </Grid>

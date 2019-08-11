@@ -238,8 +238,9 @@ namespace mainWindow
                 MyList.Clear();
                 MyInvoice = new clsInvoice(0, "", 0);
                 UpdateDisplays();
+
                 //rechecks if you can add invoices
-                //DisableCreation();
+                DisableCreation();
             }
             catch (Exception ex)
             {
@@ -404,5 +405,6 @@ namespace mainWindow
 
             DisableAllInput();
         }
+
     }
 }

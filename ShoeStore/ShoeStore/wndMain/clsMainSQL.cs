@@ -233,12 +233,7 @@ namespace mainWindow
         {
             try
             {
-                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate >= " + date + " AND  TotalCost = " + cost;
-
-                //SELECT InvoiceNum FROM Invoices 
-                //WHERE InvoiceDate >= 5 / 19 / 2018
-                //AND(InvoiceDate < (5 / 19 / 2018 + interval 1 day))
-                //AND TotalCost = 20
+                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate like '" + date + "' AND  TotalCost = " + cost;
 
                 return sSQL;
             }
