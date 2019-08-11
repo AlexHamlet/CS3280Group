@@ -184,8 +184,6 @@ namespace mainWindow
         }
 
 
-
-
         /// <summary>
         /// updates the specified invoice
         /// </summary>

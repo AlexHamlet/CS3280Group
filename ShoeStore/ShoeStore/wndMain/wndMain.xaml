@@ -14,11 +14,11 @@
 
 
         <GroupBox Header="Items" HorizontalAlignment="Left" Height="170" Margin="22,174,0,0" VerticalAlignment="Top" Width="615">
-            <Label x:Name="QuantityLabel" Content="Quantity:" HorizontalAlignment="Left" Margin="18,57,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="DeleteItemButton" Content="Delete Item" HorizontalAlignment="Left" Margin="513,81,0,0" VerticalAlignment="Top" Width="75" Click="DeleteItemButton_Click"/>
         </GroupBox>
 
 
-        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,205,0,0" VerticalAlignment="Top" Width="290"/>
+        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,205,0,0" VerticalAlignment="Top" Width="290" IsReadOnly="True"/>
         <Button x:Name="CreateInvoice" Content="Create" HorizontalAlignment="Left" Margin="360,65,0,0" VerticalAlignment="Top" Width="75" Click="CreateInvoice_Click"/>
         <Button x:Name="EditInvoice" Content="Edit" HorizontalAlignment="Left" Margin="474,65,0,0" VerticalAlignment="Top" Width="76" Click="EditInvoice_Click"/>
         <Button x:Name="DeleteInvoice" Content="Delete" HorizontalAlignment="Left" Margin="474,106,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoice_Click"/>

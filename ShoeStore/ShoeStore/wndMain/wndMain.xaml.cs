@@ -147,6 +147,7 @@ namespace mainWindow
             {
                 TypeOfSave = true;
                 SaveItem.IsEnabled = true;
+                SaveInvoice.IsEnabled = true;
                 EnableALLInput();
 
 
@@ -249,18 +250,23 @@ namespace mainWindow
 
         }
 
-
+        /// <summary>
+        /// Adds Items to the combo box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveItem_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var Item = cbItems.SelectedValue as clsLineItems;
-                Int32.TryParse(AmountOfItems.Text, out int x);
-                Item.LineItemNum = x;
-                MyList.Add(Item);
-                MyInvoice.InvoiceDate = MainWndDateTimePicker.Text;
-                UpdateDisplays();
-
+                if(AmountOfItems.Text != "" && cbItems.SelectedIndex != -1){
+                    var Item = cbItems.SelectedValue as clsLineItems;
+                    Int32.TryParse(AmountOfItems.Text, out int x);
+                    Item.LineItemNum = x;
+                    MyList.Add(Item);
+                    MyInvoice.InvoiceDate = MainWndDateTimePicker.Text;
+                    UpdateDisplays();
+                }
 
             }
             catch (Exception ex)
@@ -315,8 +321,27 @@ namespace mainWindow
             }
         }
 
-        
-        
+
+        /// <summary>
+        /// Deletes the row selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var deletedItem = dgAll_Items.SelectedValue as clsLineItems;
+                MyList.Remove(deletedItem);
+                UpdateDisplays();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
         /// <summary>
         /// closes the program
         /// </summary>
@@ -347,6 +372,9 @@ namespace mainWindow
         {
             try
             {
+                //Populates All items in the database to a combo box
+                cbItems.ItemsSource = MainLogic.ListItems();
+
                 //if there is a selected invoice
                 if (MyInvoice.InvoiceID != 0)
                 {
@@ -468,5 +496,6 @@ namespace mainWindow
             }
         }
         #endregion
+
     }
 }
