@@ -48,7 +48,7 @@ namespace mainWindow
         //figures out what type of save we are doing
         bool TypeOfSave;
 
-        mainWindow.MainWindow main;
+        internal static mainWindow.MainWindow main;
 
         /// <summary>
         /// initializes all class level items
