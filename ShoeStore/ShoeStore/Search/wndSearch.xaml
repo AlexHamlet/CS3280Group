@@ -8,7 +8,7 @@
         Title="wndSearch" Height="344.4" Width="794" Closing="Window_Closing">
     <Grid>
         <GroupBox Header="Invoices" HorizontalAlignment="Left" Height="256.333" Margin="10,10,0,0" VerticalAlignment="Top" Width="545">
-            <DataGrid x:Name="dgInvoices" HorizontalAlignment="Left" Height="212.008" VerticalAlignment="Top" Width="535" Margin="0,10,-2,-4.968" SelectionMode="Single"/>
+            <DataGrid x:Name="dgInvoices" HorizontalAlignment="Left" Height="212.008" VerticalAlignment="Top" Width="535" Margin="0,10,-2,-4.968" SelectionMode="Single" IsReadOnly="True"/>
         </GroupBox>
         <GroupBox Header="Filter" HorizontalAlignment="Left" Height="256.5" Margin="560,10,0,0" VerticalAlignment="Top" Width="203">
             <Grid HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="193" Margin="0,0,-2.6,-12.4">
