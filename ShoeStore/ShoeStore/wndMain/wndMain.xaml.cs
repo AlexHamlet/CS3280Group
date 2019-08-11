@@ -259,7 +259,8 @@ namespace mainWindow
         {
             try
             {
-                if(AmountOfItems.Text != "" && cbItems.SelectedIndex != -1){
+                if (AmountOfItems.Text != "" && cbItems.SelectedIndex != -1)
+                {
                     var Item = cbItems.SelectedValue as clsLineItems;
                     Int32.TryParse(AmountOfItems.Text, out int x);
                     Item.LineItemNum = x;
@@ -359,6 +360,23 @@ namespace mainWindow
             }
         }
 
+        /// <summary>
+        /// allows for only numbers to be entered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AmountOfItems_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9))
+            {
+                //Allow the user to use the backspace, delete, tab and enter
+                if (!(e.Key == Key.Back || e.Key == Key.Delete))
+                {
+                    //No other keys allowed besides numbers, backspace, delete, tab, and enter
+                    e.Handled = true;
+                }
+            }
+        }
 
         #endregion
 
@@ -483,7 +501,8 @@ namespace mainWindow
         /// </summary>
         private void EnableALLInput()
         {
-            try { 
+            try
+            {
                 SaveItem.IsEnabled = true;
                 dgAll_Items.IsEnabled = true;
                 cbItems.IsEnabled = true;
@@ -496,6 +515,8 @@ namespace mainWindow
             }
         }
         #endregion
+
+
 
     }
 }
