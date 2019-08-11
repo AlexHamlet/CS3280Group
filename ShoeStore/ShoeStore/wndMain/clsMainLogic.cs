@@ -11,6 +11,7 @@ namespace mainWindow
 {
     class clsMainLogic
     {
+        #region Declarations
         //declare a list of all the items in the database for the data grid
 
         ShoeStore.clsDataAccess db;
@@ -41,6 +42,11 @@ namespace mainWindow
                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }
+
+        #endregion
+
+
+        #region Getting objects for display
 
         /// <summary>
         /// gets all the invoices()
@@ -120,6 +126,36 @@ namespace mainWindow
         }
 
 
+        /// <summary>
+        /// determines what if we have entered the maximum amount of invoice entries
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDataBaseFull()
+        {
+            try
+            {
+                Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int countOfInvoices);
+
+                if (countOfInvoices == MAXINVOICES)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+
+        }
+
+        #endregion
+
+        #region Creators and Updater
 
         /// <summary>
         /// creates a new invoice
@@ -134,7 +170,7 @@ namespace mainWindow
                 db.ExecuteNonQuery(Query.CreateInvoice(date, cost));
 
 
-                Int32.TryParse(db.ExecuteScalarSQL( Query.GetInsertedInvoiceId(date, cost)), out int id);
+                Int32.TryParse(db.ExecuteScalarSQL(Query.GetInsertedInvoiceId(date, cost)), out int id);
                 InsertLineItems(id, lstItems);
                 return id;
 
@@ -148,38 +184,6 @@ namespace mainWindow
         }
 
 
-
-        /// <summary>
-        /// deletes the invoice with the id equal to the selected invoice
-        /// </summary>
-        /// <param name="ID"></param>
-        public void DeleteInvoice(int ID)
-        {
-            try
-            {
-                DeleteLineItems(ID);
-
-                db.ExecuteNonQuery(Query.DeleteInvoice(ID));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
-        public void DeleteLineItems(int id)
-        {
-            try
-            {
-                db.ExecuteNonQuery(Query.DeleteLineItems(id));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
 
 
         /// <summary>
@@ -205,8 +209,8 @@ namespace mainWindow
         /// </summary>
         /// <param name="id"></param>
         /// <param name="lstItems"></param>
-        public void UpdateLineItems(int id,List<clsLineItems> lstItems)
-        { 
+        public void UpdateLineItems(int id, List<clsLineItems> lstItems)
+        {
             try
             {
                 //deletes all line items with id = 
@@ -258,35 +262,40 @@ namespace mainWindow
 
         }
 
+        #endregion
 
+        #region Deletes
         /// <summary>
-        /// determines what if we have entered the maximum amount of invoice entries
+        /// deletes the invoice with the id equal to the selected invoice
         /// </summary>
-        /// <returns></returns>
-        public bool IsDataBaseFull()
+        /// <param name="ID"></param>
+        public void DeleteInvoice(int ID)
         {
             try
             {
-                Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int countOfInvoices);
+                DeleteLineItems(ID);
 
-                if (countOfInvoices == MAXINVOICES)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                db.ExecuteNonQuery(Query.DeleteInvoice(ID));
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
-
         }
 
-
-
+        public void DeleteLineItems(int id)
+        {
+            try
+            {
+                db.ExecuteNonQuery(Query.DeleteLineItems(id));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+        #endregion
     }
 }

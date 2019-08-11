@@ -73,6 +73,51 @@ namespace mainWindow
         }
 
 
+        /// <summary>
+        /// returns the count of how many invoices there are
+        /// </summary>
+        /// <returns></returns>
+        public string GetCountOfInvoices()
+        {
+            try
+            {
+                string sSQL = "SELECT COUNT(*) FROM Invoices;";
+
+
+
+
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+
+
+
+        }
+
+        /// <summary>
+        /// Finds the last inserted invoices id
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        public string GetInsertedInvoiceId(string date, string cost)
+        {
+            try
+            {
+                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate like '" + date + "' AND  TotalCost = " + cost;
+
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
 
         #endregion
 
@@ -123,6 +168,33 @@ namespace mainWindow
         }
 
         /// <summary>
+        /// this updates selected invoice
+        /// </summary>
+        public string UpdateInvoice(int id, string date, string cost)
+        {
+            try
+            {
+
+                string sSQL = "UPDATE Invoices SET InvoiceDate = " + date + ", TotalCost = " + cost
+                              + " WHERE InvoiceNum = " + id.ToString() + ";";
+                return sSQL;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+
+        }
+
+
+
+        #endregion
+
+        #region Deletes
+
+        /// <summary>
         /// this deletes the invoice with specified id number
         /// </summary>
         public string DeleteInvoice(int IDNum)
@@ -143,60 +215,6 @@ namespace mainWindow
             }
 
         }
-
-        /// <summary>
-        /// this updates selected invoice
-        /// </summary>
-        public string UpdateInvoice(int id, string date, string cost)
-        {
-            try
-            {
-
-
-                string sSQL = "UPDATE Invoices SET InvoiceDate = " + date + ", TotalCost = " + cost 
-                              + " WHERE InvoiceNum = " +id.ToString() + ";";
-                return sSQL;
-
-
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-
-        }
-
-
-
-        #endregion
-
-        /// <summary>
-        /// returns the count of how many invoices there are
-        /// </summary>
-        /// <returns></returns>
-        public string GetCountOfInvoices()
-        {
-            try
-            {
-                string sSQL = "SELECT COUNT(*) FROM Invoices;";
-
-
-
-
-                return sSQL;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-
-
-
-        }
-
 
 
 
@@ -220,27 +238,7 @@ namespace mainWindow
             }
         }
 
-        /// <summary>
-        /// Finds the last inserted invoices id
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="cost"></param>
-        /// <returns></returns>
-        public string GetInsertedInvoiceId(string date, string cost)
-        {
-            try
-            {
-                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate like '" + date + "' AND  TotalCost = " + cost;
 
-                return sSQL;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
-
+        #endregion
     }
 }
