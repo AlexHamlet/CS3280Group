@@ -18,13 +18,13 @@
         </GroupBox>
 
 
-        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,188,0,0" VerticalAlignment="Top" Width="290"/>
+        <DataGrid x:Name="dgAll_Items" HorizontalAlignment="Left" Height="127" Margin="245,205,0,0" VerticalAlignment="Top" Width="290"/>
         <Button x:Name="CreateInvoice" Content="Create" HorizontalAlignment="Left" Margin="360,65,0,0" VerticalAlignment="Top" Width="75" Click="CreateInvoice_Click"/>
         <Button x:Name="EditInvoice" Content="Edit" HorizontalAlignment="Left" Margin="474,65,0,0" VerticalAlignment="Top" Width="76" Click="EditInvoice_Click"/>
         <Button x:Name="DeleteInvoice" Content="Delete" HorizontalAlignment="Left" Margin="474,106,0,0" VerticalAlignment="Top" Width="75" Click="DeleteInvoice_Click"/>
-        <Menu x:Name="MenuTabs" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" FontSize="15">
-            <MenuItem x:Name="searchTab" Header="Search" Width="54" StaysOpenOnClick="True" Click="SearchTab_Click"/>
-            <MenuItem x:Name="itemsTab" Header="Items" Width="55" Click="ItemsTab_Click"/>
+        <Menu x:Name="MenuTabs" HorizontalAlignment="Left" Height="29" Margin="10,10,0,0" VerticalAlignment="Top" Width="176.5" FontSize="15">
+            <MenuItem x:Name="searchTab" Header="Search" Width="91" StaysOpenOnClick="True" Click="SearchTab_Click"/>
+            <MenuItem x:Name="itemsTab" Header="Items" Width="86.5" Click="ItemsTab_Click"/>
         </Menu>
         <DatePicker x:Name="MainWndDateTimePicker" HorizontalAlignment="Left" Margin="145,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.029,1.042"/>
         <Label x:Name="InvoiceIdLabel" Content="InvoiceId" HorizontalAlignment="Left" Margin="22,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.658,-0.192"/>

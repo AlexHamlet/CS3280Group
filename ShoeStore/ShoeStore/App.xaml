@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:ShoeStore"
              StartupUri="wndMain\wndMain.xaml">
     <Application.Resources>
-            
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ShinyRed.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>
