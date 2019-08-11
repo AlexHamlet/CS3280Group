@@ -55,38 +55,44 @@ namespace mainWindow
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            MainLogic = new clsMainLogic();
+                MainLogic = new clsMainLogic();
 
-            isFull = MainLogic.IsDataBaseFull();
+                isFull = MainLogic.IsDataBaseFull();
 
-            MyList = new List<clsLineItems>();
+                MyList = new List<clsLineItems>();
 
-            MyInvoice = new clsInvoice(0,"",0.00);
+                MyInvoice = new clsInvoice(0, "", 0.00);
 
-            TypeOfSave = false;
+                TypeOfSave = false;
 
-            //main = this;
-            cbItems.ItemsSource = MainLogic.ListItems();
+                //main = this;
+                cbItems.ItemsSource = MainLogic.ListItems();
 
-            dgAll_Items.ItemsSource = MyList;
+                dgAll_Items.ItemsSource = MyList;
 
-            UpdateDisplays();
+                UpdateDisplays();
 
-            ItemsWindow = new wndItems();        //initializes the EditWindow
+                ItemsWindow = new wndItems();        //initializes the EditWindow
 
-            SearchWindow = new wndSearch();  //initializes the SearchWindow
+                SearchWindow = new wndSearch();  //initializes the SearchWindow
 
-            main = this;
+                main = this;
 
-            
-            EditInvoice.IsEnabled = false;
-            DeleteInvoice.IsEnabled = false;
-            SaveInvoice.IsEnabled = false;
-            DisableAllInput();
 
-            
+                EditInvoice.IsEnabled = false;
+                DeleteInvoice.IsEnabled = false;
+                SaveInvoice.IsEnabled = false;
+                DisableAllInput();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>
@@ -94,9 +100,16 @@ namespace mainWindow
         /// </summary>
         /// <param name="e"></param>
         protected override void OnClosed(EventArgs e)
-        { 
-
-            Environment.Exit(0);
+        {
+            try
+            {
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
 
@@ -109,25 +122,16 @@ namespace mainWindow
         {
             try
             {
-
-
-                
-
-
                 //MyInvoice.InvoiceTotal = 5;
-
-
 
                 //if there is a selected invoice
                 if (MyInvoice.InvoiceID != 0)
                 {
-                    InvoiceIdLabel.Content = "Invoice ID: " +  MyInvoice.InvoiceID;
+                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
 
-                     
+
 
                     MainWndDateTimePicker.SelectedDate = DateTime.Parse(MyInvoice.InvoiceDate);
-
-
 
                 }
                 else
@@ -294,7 +298,8 @@ namespace mainWindow
                 EditInvoice.IsEnabled = true;
 
                 //check if it has been closed but nothing has been selected
-                if (SearchWindow.SelectedInvoice.InvoiceID != 0) {
+                if (SearchWindow.SelectedInvoice.InvoiceID != 0)
+                {
 
                     MyInvoice = SearchWindow.SelectedInvoice;
 
@@ -307,7 +312,7 @@ namespace mainWindow
 
                 UpdateDisplays();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                 MethodInfo.GetCurrentMethod().Name, ex.Message);
@@ -342,12 +347,12 @@ namespace mainWindow
         {
             try
             {
-                    var Item = cbItems.SelectedValue as clsLineItems;
-                    Int32.TryParse(AmountOfItems.Text, out int x);
-                    Item.LineItemNum = x;
-                    MyList.Add(Item);
+                var Item = cbItems.SelectedValue as clsLineItems;
+                Int32.TryParse(AmountOfItems.Text, out int x);
+                Item.LineItemNum = x;
+                MyList.Add(Item);
 
-                    UpdateDisplays();
+                UpdateDisplays();
 
 
             }
@@ -358,20 +363,42 @@ namespace mainWindow
             }
         }
 
+        /// <summary>
+        /// disables all input devices
+        /// </summary>
         private void DisableAllInput()
         {
-            SaveItem.IsEnabled = false;
-            dgAll_Items.IsEnabled = false;
-            cbItems.IsEnabled = false;
-            MainWndDateTimePicker.IsEnabled = false;
+            try
+            {
+                SaveItem.IsEnabled = false;
+                dgAll_Items.IsEnabled = false;
+                cbItems.IsEnabled = false;
+                MainWndDateTimePicker.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
 
+        /// <summary>
+        /// enables all input devices
+        /// </summary>
         private void EnableALLInput()
         {
-            SaveItem.IsEnabled = true;
-            dgAll_Items.IsEnabled = true;
-            cbItems.IsEnabled = true;
-            MainWndDateTimePicker.IsEnabled = true;
+            try
+            {
+                SaveItem.IsEnabled = true;
+                dgAll_Items.IsEnabled = true;
+                cbItems.IsEnabled = true;
+                MainWndDateTimePicker.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -381,29 +408,41 @@ namespace mainWindow
         /// <param name="e"></param>
         private void SaveInvoice_Click(object sender, RoutedEventArgs e)
         {
-            //parse out the date entered on the data grid
-            string date = MainWndDateTimePicker.Text;
-
-            //parse out the cost they have entered
-            string sCost = TotalCostTextBox.Text;
-
-            if (TypeOfSave)
+            try
             {
+                //parse out the date entered on the data grid
+                string date = MainWndDateTimePicker.Text;
 
-                MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
-                //updates all the invoices added and deleted
-                MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
-                
+                //parse out the cost they have entered
+                string sCost = TotalCostTextBox.Text;
+
+                if (TypeOfSave)
+                {
+
+                    MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
+                    //updates all the invoices added and deleted
+                    MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
+
+                }
+                else
+                {
+                    //combo statement calls another function that will add a invoice and will return the new invoices id
+                    MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
+                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
+
+                }
+                DisableCreation();
+                EditInvoice.IsEnabled = true;
+                DeleteInvoice.IsEnabled = true;
+
+
+                DisableAllInput();
             }
-            else { 
-                //combo statement calls another function that will add a invoice and will return the new invoices id
-                InvoiceIdLabel.Content = "Invoice ID: " + MainLogic.CreateInvoice(date, sCost, MyList);
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
-            EditInvoice.IsEnabled = true;
-            DeleteInvoice.IsEnabled = true;
-
-
-            DisableAllInput();
         }
 
     }
