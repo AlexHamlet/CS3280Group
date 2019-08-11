@@ -24,7 +24,7 @@ namespace mainWindow
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        #region Declarations 
         //declares the search window
         wndSearch SearchWindow;
 
@@ -101,89 +101,10 @@ namespace mainWindow
             }
         }
 
-        /// <summary>
-        /// closes the program
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnClosed(EventArgs e)
-        {
-            try
-            {
-                Environment.Exit(0);
-            }
-            catch (Exception ex)
-            {
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                         MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-        }
+        #endregion
 
+        #region events
 
-
-        /// <summary>
-        /// displays all the info to the data grid 
-        /// function should be called every time there is a edit to the data that is saved.
-        /// </summary>
-        private void UpdateDisplays()
-        {
-            try
-            {
-                //if there is a selected invoice
-                if (MyInvoice.InvoiceID != 0)
-                {
-                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
-
-                    MainWndDateTimePicker.SelectedDate = DateTime.Parse(MyInvoice.InvoiceDate);
-
-                }
-                //if there isn't a selected invoice
-                else
-                {
-                    InvoiceIdLabel.Content = "Invoice ID: TBD";
-                }
-
-                //calculates the total cost.
-                double totalCost = 0;
-
-                //calculates the cost
-                foreach (var item in MyList)
-                {
-                    totalCost += (item.Cost * item.LineItemNum);
-                }
-
-                TotalCostTextBox.Text = totalCost.ToString();
-
-
-                //display all selected Items on data grid
-                dgAll_Items.Items.Refresh();
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
-
-
-        /// <summary>
-        /// creates a message box and displays a message box with text relating to the error.
-        /// </summary>
-        /// <param name="sClass"></param>
-        /// <param name="sMethod"></param>
-        /// <param name="sMessage"></param>
-        private void HandleError(string sClass, string sMethod, string sMessage)
-        {
-            try
-            {
-                MessageBox.Show(sClass + "." + sMethod + "->" + sMessage);
-            }
-            catch (Exception ex)
-            {
-                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
-            }
-        }
 
         /// <summary>
         /// parses out the data the user entered and sends it to the main logic class
@@ -195,7 +116,7 @@ namespace mainWindow
             try
             {
                 //makes a new blank invoice
-                MyInvoice = new clsInvoice(0,"",0.0);
+                MyInvoice = new clsInvoice(0, "", 0.0);
                 MyInvoice.InvoiceDate = DateTime.Now.ToString();
                 MyList.Clear();
                 cbItems.SelectedIndex = -1;
@@ -264,31 +185,6 @@ namespace mainWindow
             }
         }
 
-
-        /// <summary>
-        /// disables the create invoice button if the database is deemed full.
-        /// </summary>
-        private void DisableCreation()
-        {
-            try
-            {
-                isFull = MainLogic.IsDataBaseFull();
-
-                if (isFull)
-                {
-                    CreateInvoice.IsEnabled = false;
-                }
-                else
-                {
-                    CreateInvoice.IsEnabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
 
 
         /// <summary>
@@ -374,43 +270,6 @@ namespace mainWindow
             }
         }
 
-        /// <summary>
-        /// disables all input devices
-        /// </summary>
-        private void DisableAllInput()
-        {
-            try
-            {
-                SaveItem.IsEnabled = false;
-                dgAll_Items.IsEnabled = false;
-                cbItems.IsEnabled = false;
-                MainWndDateTimePicker.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// enables all input devices
-        /// </summary>
-        private void EnableALLInput()
-        {
-            try
-            {
-                SaveItem.IsEnabled = true;
-                dgAll_Items.IsEnabled = true;
-                cbItems.IsEnabled = true;
-                MainWndDateTimePicker.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
 
         /// <summary>
         /// what happens when the save button is pushed
@@ -456,5 +315,158 @@ namespace mainWindow
             }
         }
 
+        
+        
+        /// <summary>
+        /// closes the program
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosed(EventArgs e)
+        {
+            try
+            {
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// displays all the info to the data grid 
+        /// function should be called every time there is a edit to the data that is saved.
+        /// </summary>
+        private void UpdateDisplays()
+        {
+            try
+            {
+                //if there is a selected invoice
+                if (MyInvoice.InvoiceID != 0)
+                {
+                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
+
+                    MainWndDateTimePicker.SelectedDate = DateTime.Parse(MyInvoice.InvoiceDate);
+
+                }
+                //if there isn't a selected invoice
+                else
+                {
+                    InvoiceIdLabel.Content = "Invoice ID: TBD";
+                }
+
+                //calculates the total cost.
+                double totalCost = 0;
+
+                //calculates the cost
+                foreach (var item in MyList)
+                {
+                    totalCost += (item.Cost * item.LineItemNum);
+                }
+
+                TotalCostTextBox.Text = totalCost.ToString();
+
+
+                //display all selected Items on data grid
+                dgAll_Items.Items.Refresh();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// creates a message box and displays a message box with text relating to the error.
+        /// </summary>
+        /// <param name="sClass"></param>
+        /// <param name="sMethod"></param>
+        /// <param name="sMessage"></param>
+        private void HandleError(string sClass, string sMethod, string sMessage)
+        {
+            try
+            {
+                MessageBox.Show(sClass + "." + sMethod + "->" + sMessage);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// disables the create invoice button if the database is deemed full.
+        /// </summary>
+        private void DisableCreation()
+        {
+            try
+            {
+                isFull = MainLogic.IsDataBaseFull();
+
+                if (isFull)
+                {
+                    CreateInvoice.IsEnabled = false;
+                }
+                else
+                {
+                    CreateInvoice.IsEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// disables all input devices
+        /// </summary>
+        private void DisableAllInput()
+        {
+            try
+            {
+                SaveItem.IsEnabled = false;
+                dgAll_Items.IsEnabled = false;
+                cbItems.IsEnabled = false;
+                MainWndDateTimePicker.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// enables all input devices
+        /// </summary>
+        private void EnableALLInput()
+        {
+            try { 
+                SaveItem.IsEnabled = true;
+                dgAll_Items.IsEnabled = true;
+                cbItems.IsEnabled = true;
+                MainWndDateTimePicker.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
+        #endregion
     }
 }
