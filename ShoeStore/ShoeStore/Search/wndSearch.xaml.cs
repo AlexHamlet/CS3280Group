@@ -131,6 +131,11 @@ namespace ShoeStore.Search
             }
         }
 
+        /// <summary>
+        /// Prevents Window from actually closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //this.SelectedInvoice = null;
@@ -138,6 +143,12 @@ namespace ShoeStore.Search
             this.Hide();
         }
 
+        /// <summary>
+        /// Handles the Clear Button
+        /// Resets all of the query criteria
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             try

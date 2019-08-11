@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:ShoeStore"
              StartupUri="wndMain\wndMain.xaml">
     <Application.Resources>
-            
+
+        <ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="myBrush" Color="{StaticResource SystemBaseHighColor}"/>
+                </ResourceDictionary>
+            <ResourceDictionary x:Key="Dark">
+                <SolidColorBrush x:Key="myBrush" Color="{StaticResource SystemBaseHighColor}"/>
+            </ResourceDictionary>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

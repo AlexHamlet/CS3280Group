@@ -60,3 +60,4 @@ C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeS
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.Properties.Resources.resources
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.GenerateResource.cache
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.CoreCompileInputs.cache
+C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\App.baml
