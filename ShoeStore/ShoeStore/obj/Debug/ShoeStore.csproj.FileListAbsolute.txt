@@ -60,4 +60,28 @@ C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeS
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.Properties.Resources.resources
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.GenerateResource.cache
 C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.CoreCompileInputs.cache
-C:\Users\Alex\Desktop\MISC School\CS 3280\Programs\Fix\CS3280-groupProject\ShoeStore\ShoeStore\obj\Debug\App.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\bin\Debug\ShoeStore.exe.config
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\bin\Debug\ShoeStore.exe
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\bin\Debug\ShoeStore.pdb
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csprojAssemblyReference.cache
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\Items\wndItems.g.cs
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\MainWindow.g.cs
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\Search\wndSearch.g.cs
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\wndMain\wndMain.g.cs
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\App.g.cs
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore_MarkupCompile.cache
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore_MarkupCompile.lref
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\Items\wndItems.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\MainWindow.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\Search\wndSearch.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\wndMain\wndMain.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.g.resources
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.Properties.Resources.resources
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.GenerateResource.cache
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.csproj.CoreCompileInputs.cache
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.exe
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShoeStore.pdb
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\BureauBlack.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\App.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ExpressionDark.baml
+C:\Users\Jason\Documents\CS3280Group\ShoeStore\ShoeStore\obj\Debug\ShinyRed.baml

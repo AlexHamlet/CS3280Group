@@ -29,10 +29,6 @@ namespace ShoeStore.Items
         clsItemsLogic ItemsLogic;
 
         
-        /// <summary>
-        /// create main window object for closing items window
-        /// </summary>
-        mainWindow.MainWindow main;
 
         /// <summary>
         /// create a dataset object for the datagrid
@@ -46,7 +42,6 @@ namespace ShoeStore.Items
             {
                 InitializeComponent();
                 ItemsLogic = new clsItemsLogic();
-                main = mainWindow.MainWindow.main;
                 ds = new DataSet();
                 UpdateDG();
             }

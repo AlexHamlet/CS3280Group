@@ -42,13 +42,12 @@ namespace mainWindow
         clsInvoice MyInvoice;
 
 
-        //declares the is full bool value
+        //declares the is full boolean value
         bool isFull;
 
         //figures out what type of save we are doing
         bool TypeOfSave;
 
-        internal static mainWindow.MainWindow main;
 
         /// <summary>
         /// initializes all class level items
@@ -59,33 +58,40 @@ namespace mainWindow
             {
                 InitializeComponent();
 
+                //Main window main logic class
                 MainLogic = new clsMainLogic();
 
+                //Flag that checks if the database is full
                 isFull = MainLogic.IsDataBaseFull();
 
+                //all the selected items 
                 MyList = new List<clsLineItems>();
 
+                //new blank invoice
                 MyInvoice = new clsInvoice(0, "", 0.00);
 
+                //flag to switch between and edit save and an add save
                 TypeOfSave = false;
 
-                //main = this;
+                //Populates All items in the database to a combo box
                 cbItems.ItemsSource = MainLogic.ListItems();
 
+                //populates all selected into a data grid
                 dgAll_Items.ItemsSource = MyList;
 
+                //updates the displays
                 UpdateDisplays();
+
 
                 ItemsWindow = new wndItems();        //initializes the ItemsWindow
 
                 SearchWindow = new wndSearch();  //initializes the SearchWindow
 
-                main = this;
-
-
+                //disables editing/deleting/saving until there is something to save
                 EditInvoice.IsEnabled = false;
                 DeleteInvoice.IsEnabled = false;
                 SaveInvoice.IsEnabled = false;
+                //disables all input 
                 DisableAllInput();
             }
             catch (Exception ex)
@@ -122,18 +128,15 @@ namespace mainWindow
         {
             try
             {
-                //MyInvoice.InvoiceTotal = 5;
-
                 //if there is a selected invoice
                 if (MyInvoice.InvoiceID != 0)
                 {
                     InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
 
-
-
                     MainWndDateTimePicker.SelectedDate = DateTime.Parse(MyInvoice.InvoiceDate);
 
                 }
+                //if there isn't a selected invoice
                 else
                 {
                     InvoiceIdLabel.Content = "Invoice ID: TBD";
@@ -142,6 +145,7 @@ namespace mainWindow
                 //calculates the total cost.
                 double totalCost = 0;
 
+                //calculates the cost
                 foreach (var item in MyList)
                 {
                     totalCost += (item.Cost * item.LineItemNum);
@@ -190,11 +194,18 @@ namespace mainWindow
         {
             try
             {
+                //makes a new blank invoice
+                MyInvoice = new clsInvoice(0,"",0.0);
+                MyInvoice.InvoiceDate = DateTime.Now.ToString();
+                MyList.Clear();
+                cbItems.SelectedIndex = -1;
+                AmountOfItems.Clear();
+
+
+                UpdateDisplays();
                 TypeOfSave = false;
                 SaveInvoice.IsEnabled = true;
                 EnableALLInput();
-                //checks if database is full then disables create invoice button
-                //DisableCreation();
 
             }
             catch (Exception ex)

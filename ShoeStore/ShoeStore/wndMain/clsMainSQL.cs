@@ -25,11 +25,10 @@ namespace mainWindow
         /// </summary>
         public clsMainSQL()
         {
-           
-
         }
 
 
+        #region Getting Objects
 
 
         /// <summary>
@@ -50,6 +49,11 @@ namespace mainWindow
             }
         }
 
+        /// <summary>
+        /// gets the line items and there description from the tables ItemsDesc and LineItems
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <returns></returns>
         public string getLineItems(int invoiceId)
         {
             try
@@ -69,6 +73,10 @@ namespace mainWindow
         }
 
 
+
+        #endregion
+
+        #region Creates and Updates
 
         /// <summary>
         /// creates a new invoice
@@ -93,7 +101,26 @@ namespace mainWindow
 
         }
 
-
+        /// <summary>
+        /// Inserts a new line item into the line item databse
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="Item"></param>
+        /// <returns></returns>
+        public string InsertLineItems(int id, clsLineItems Item)
+        {
+            try
+            {
+                string sSQL = "INSERT INTO LineItems VALUES (" + id.ToString() + ","
+                    + Item.LineItemNum.ToString() + ", \"" + Item.ItemCode.ToString() + "\")";
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
+        }
 
         /// <summary>
         /// this deletes the invoice with specified id number
@@ -141,21 +168,9 @@ namespace mainWindow
 
         }
 
-        public string InsertLineItems(int id, clsLineItems Item)
-        {
-            try
-            {
-                string sSQL = "INSERT INTO LineItems VALUES (" + id.ToString() + ","
-                    + Item.LineItemNum.ToString() + ", \"" + Item.ItemCode.ToString() + "\")";
-                return sSQL;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
 
+
+        #endregion
 
         /// <summary>
         /// returns the count of how many invoices there are

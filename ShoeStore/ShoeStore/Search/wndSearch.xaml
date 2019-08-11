@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:ShoeStore.Search"
         mc:Ignorable="d"
         Title="wndSearch" Height="344.4" Width="794" Closing="Window_Closing">
-  <Grid>
-    <GroupBox Header="Invoices" HorizontalAlignment="Left" Height="248" Margin="10,10,0,0" VerticalAlignment="Top" Width="545">
-      <DataGrid x:Name="dgInvoices" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="535" Margin="0,0,-2.2,-12.4" SelectionMode="Single"/>
-    </GroupBox>
-    <GroupBox Header="Filter" HorizontalAlignment="Left" Height="248" Margin="560,10,0,0" VerticalAlignment="Top" Width="203">
-      <Grid HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="193" Margin="0,0,-2.6,-12.4">
-        <ComboBox x:Name="cmbbxInvNum" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
-        <Label Content="Invoice Number" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmbbxInvDate" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
-        <Label Content="Invoice Date" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmbbxInvTot" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
-        <Label Content="Total Charge" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="29,209,0,0" VerticalAlignment="Top" Width="75" Click="BtnClear_Click"/>
+    <Grid>
+        <GroupBox Header="Invoices" HorizontalAlignment="Left" Height="256.333" Margin="10,10,0,0" VerticalAlignment="Top" Width="545">
+            <DataGrid x:Name="dgInvoices" HorizontalAlignment="Left" Height="212.008" VerticalAlignment="Top" Width="535" Margin="0,10,-2,-4.968" SelectionMode="Single"/>
+        </GroupBox>
+        <GroupBox Header="Filter" HorizontalAlignment="Left" Height="256.5" Margin="560,10,0,0" VerticalAlignment="Top" Width="203">
+            <Grid HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="193" Margin="0,0,-2.6,-12.4">
+                <ComboBox x:Name="cmbbxInvNum" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
+                <Label Content="Invoice Number" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbbxInvDate" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
+                <Label Content="Invoice Date" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbbxInvTot" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
+                <Label Content="Total Charge" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="55,210.04,0,0" VerticalAlignment="Top" Width="75" Click="BtnClear_Click" RenderTransformOrigin="0.735,1.137"/>
             </Grid>
-    </GroupBox>
-    <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="286,263,0,0" VerticalAlignment="Top" Width="75" Click="BtnSelect_Click"/>
-    <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="417,263,0,0" VerticalAlignment="Top" Width="75" Click="BtnCancel_Click"/>
-  </Grid>
+        </GroupBox>
+        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="285,271.333,0,0" VerticalAlignment="Top" Width="75" Click="BtnSelect_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="416.667,271.333,0,0" VerticalAlignment="Top" Width="75" Click="BtnCancel_Click"/>
+    </Grid>
 </Window>
