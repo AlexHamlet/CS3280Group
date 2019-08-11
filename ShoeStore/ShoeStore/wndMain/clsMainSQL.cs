@@ -84,7 +84,7 @@ namespace mainWindow
         {
             try
             {
-                string sSQL = "SELECT InvoiceNum FROM Invoices WHERE InvoiceDate like '" + date + "' AND  TotalCost = " + cost;
+                string sSQL = "SELECT MAX(InvoiceNum) FROM Invoices";
 
                 return sSQL;
             }

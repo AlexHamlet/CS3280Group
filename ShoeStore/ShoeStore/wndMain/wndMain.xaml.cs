@@ -285,6 +285,7 @@ namespace mainWindow
                         Item.LineItemNum = x;
                         MyList.Add(Item);
                     }
+                    AmountOfItems.Text = "";
                     MyInvoice.InvoiceDate = MainWndDateTimePicker.Text;
                     UpdateDisplays();
                 }
