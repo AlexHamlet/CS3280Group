@@ -102,6 +102,12 @@ namespace ShoeStore.Items
         {
             try
             {
+                if (dgItems.SelectedItem == null)
+                {
+                    MessageBox.Show("You must select an Item to edit");
+                    return;
+                }
+
                 DataRowView row = (DataRowView)dgItems.SelectedItem;
 
                 ItemsLogic.EditItem(txtCost.Text, txtDesc.Text, row[0].ToString());
