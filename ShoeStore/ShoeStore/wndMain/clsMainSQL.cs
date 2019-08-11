@@ -59,7 +59,7 @@ namespace mainWindow
             try
             {
 
-                string SQL = "Select a.ItemCode, a.ItemDesc, a.Cost, b.LineItemNum " +
+                string SQL = "Select a.ItemCode, a.ItemDesc, a.Cost, b.Quantity " +
                     "From ItemDesc AS a INNER JOIN LineItems as b ON a.ItemCode = b.ItemCode WHERE InvoiceNum = " + invoiceId.ToString();
 
                 return SQL;
