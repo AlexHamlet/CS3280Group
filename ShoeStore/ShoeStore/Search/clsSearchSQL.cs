@@ -75,7 +75,7 @@ namespace ShoeStore.Search
         {
             try
             {
-                return "Select TotalCost From Invoices";
+                return "Select Distinct TotalCost From Invoices";
             }
             catch (Exception ex)
             {
