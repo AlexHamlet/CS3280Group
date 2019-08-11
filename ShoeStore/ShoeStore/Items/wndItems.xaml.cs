@@ -179,5 +179,18 @@ namespace ShoeStore.Items
                 MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
+
+        private void txtCost_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9)) 
+            {
+                //Allow the user to use the backspace, delete, tab and enter
+                if (!(e.Key == Key.Back || e.Key == Key.Delete ))
+                {
+                    //No other keys allowed besides numbers, backspace, delete, tab, and enter
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

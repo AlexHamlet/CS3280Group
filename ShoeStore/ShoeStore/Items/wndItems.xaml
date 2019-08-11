@@ -16,7 +16,7 @@
         <Button x:Name="btnEdit" Content="Edit" Margin="322,277,48,0" Click="btnEdit_Click" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="btnDelete" Content="Delete" Margin="322,311,48,0" VerticalAlignment="Top" Height="20" Click="btnDelete_Click"/>
         <Label Content="Cost:" HorizontalAlignment="Left" Margin="119,253,0,0" VerticalAlignment="Top" Height="26" Width="36"/>
-        <TextBox x:Name="txtCost" HorizontalAlignment="Left" Height="23" Margin="160,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" MaxLines="1"/>
+        <TextBox x:Name="txtCost" HorizontalAlignment="Left" Height="23" Margin="160,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" MaxLines="1" KeyDown="txtCost_KeyDown"/>
         <Label Content="Description:" HorizontalAlignment="Left" Margin="22,295,0,0" VerticalAlignment="Top" Height="26" Width="73"/>
         <TextBox x:Name="txtDesc" HorizontalAlignment="Left" Height="23" Margin="100,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock x:Name="txtWarning" HorizontalAlignment="Left" Margin="225,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Height="65" TextAlignment="Center" Foreground="#FFF90000"/>
