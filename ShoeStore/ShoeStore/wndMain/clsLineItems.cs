@@ -18,7 +18,7 @@ namespace mainWindow
 
         public override string ToString()
         {
-            return ItemDesc + " $" + Cost;
+            return ItemDesc;
         }
     }
 }

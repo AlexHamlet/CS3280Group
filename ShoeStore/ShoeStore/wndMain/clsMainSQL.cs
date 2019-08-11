@@ -73,30 +73,6 @@ namespace mainWindow
         }
 
 
-        /// <summary>
-        /// returns the count of how many invoices there are
-        /// </summary>
-        /// <returns></returns>
-        public string GetCountOfInvoices()
-        {
-            try
-            {
-                string sSQL = "SELECT COUNT(*) FROM Invoices;";
-
-
-
-
-                return sSQL;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-
-
-
-        }
 
         /// <summary>
         /// Finds the last inserted invoices id

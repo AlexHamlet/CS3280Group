@@ -18,9 +18,6 @@ namespace mainWindow
 
         clsMainSQL Query;
 
-        //sets a constant value when opened tot he maximum amount of invoices
-        readonly int MAXINVOICES;
-
 
         /// <summary>
         /// initialization of all class level variables
@@ -32,9 +29,6 @@ namespace mainWindow
                 Query = new clsMainSQL();
                 db = new ShoeStore.clsDataAccess();
 
-                //set the max invoices equal to the invoice count + 1
-                Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int x);
-                MAXINVOICES = x + 1;
             }
             catch (Exception ex)
             {
@@ -126,32 +120,6 @@ namespace mainWindow
         }
 
 
-        /// <summary>
-        /// determines what if we have entered the maximum amount of invoice entries
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDataBaseFull()
-        {
-            try
-            {
-                Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int countOfInvoices);
-
-                if (countOfInvoices == MAXINVOICES)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-
-        }
 
         #endregion
 

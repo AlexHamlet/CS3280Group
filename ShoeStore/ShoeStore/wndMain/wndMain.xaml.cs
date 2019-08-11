@@ -42,8 +42,6 @@ namespace mainWindow
         clsInvoice MyInvoice;
 
 
-        //declares the is full boolean value
-        bool isFull;
 
         //figures out what type of save we are doing
         bool TypeOfSave;
@@ -60,9 +58,6 @@ namespace mainWindow
 
                 //Main window main logic class
                 MainLogic = new clsMainLogic();
-
-                //Flag that checks if the database is full
-                isFull = MainLogic.IsDataBaseFull();
 
                 //all the selected items 
                 MyList = new List<clsLineItems>();
@@ -174,9 +169,6 @@ namespace mainWindow
                 MyList.Clear();
                 MyInvoice = new clsInvoice(0, "", 0);
                 UpdateDisplays();
-
-                //rechecks if you can add invoices
-                DisableCreation();
             }
             catch (Exception ex)
             {
@@ -207,6 +199,7 @@ namespace mainWindow
                 EditInvoice.IsEnabled = true;
                 MyList.Clear();
                 AmountOfItems.Text = "";
+                ItemCostTextBox.Text = "";
                 cbItems.SelectedIndex = -1;
                 DisableAllInput();
                 SaveInvoice.IsEnabled = false;
@@ -247,6 +240,7 @@ namespace mainWindow
                 ItemsWindow.ShowDialog();
                 this.Show();
                 AmountOfItems.Text = "";
+                ItemCostTextBox.Text = "";
                 cbItems.SelectedIndex = -1;
                 SaveInvoice.IsEnabled = false;
                 DisableAllInput();
@@ -271,10 +265,26 @@ namespace mainWindow
             {
                 if (AmountOfItems.Text != "" && cbItems.SelectedIndex != -1)
                 {
+                    bool ItemInList = false;
                     var Item = cbItems.SelectedValue as clsLineItems;
-                    Int32.TryParse(AmountOfItems.Text, out int x);
-                    Item.LineItemNum = x;
-                    MyList.Add(Item);
+
+
+                    foreach (var listItem in MyList)
+                    {
+                        if(listItem.ItemCode == Item.ItemCode)
+                        {
+                            ItemInList = true;
+                            Int32.TryParse(AmountOfItems.Text, out int x);
+                            listItem.LineItemNum = x;
+                            break;
+                        }
+                    }
+                    if (!ItemInList)
+                    {
+                        Int32.TryParse(AmountOfItems.Text, out int x);
+                        Item.LineItemNum = x;
+                        MyList.Add(Item);
+                    }
                     MyInvoice.InvoiceDate = MainWndDateTimePicker.Text;
                     UpdateDisplays();
                 }
@@ -314,12 +324,13 @@ namespace mainWindow
                     }
                     else
                     {
+
+
                         //combo statement calls another function that will add a invoice and will return the new invoices id
                         MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
                         InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
 
                     }
-                    DisableCreation();
                     EditInvoice.IsEnabled = true;
                     DeleteInvoice.IsEnabled = true;
 
@@ -372,20 +383,54 @@ namespace mainWindow
         }
 
         /// <summary>
+        /// updates the cost text box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CbItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (cbItems.SelectedIndex != -1)
+                {
+                    var cost = cbItems.SelectedValue as clsLineItems;
+                    ItemCostTextBox.Text = "$ " + cost.Cost;
+                }
+                else
+                {
+                    ItemCostTextBox.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// allows for only numbers to be entered
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AmountOfItems_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9))
+            try
             {
-                //Allow the user to use the backspace, delete, tab and enter
-                if (!(e.Key == Key.Back || e.Key == Key.Delete))
+                if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9))
                 {
-                    //No other keys allowed besides numbers, backspace, delete, tab, and enter
-                    e.Handled = true;
+                    //Allow the user to use the backspace, delete, tab and enter
+                    if (!(e.Key == Key.Back || e.Key == Key.Delete))
+                    {
+                        //No other keys allowed besides numbers, backspace, delete, tab, and enter
+                        e.Handled = true;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                         MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
 
@@ -463,32 +508,6 @@ namespace mainWindow
 
 
         /// <summary>
-        /// disables the create invoice button if the database is deemed full.
-        /// </summary>
-        private void DisableCreation()
-        {
-            try
-            {
-                isFull = MainLogic.IsDataBaseFull();
-
-                if (isFull)
-                {
-                    CreateInvoice.IsEnabled = false;
-                }
-                else
-                {
-                    CreateInvoice.IsEnabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
-                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
-            }
-        }
-
-
-        /// <summary>
         /// disables all input devices
         /// </summary>
         private void DisableAllInput()
@@ -500,6 +519,7 @@ namespace mainWindow
                 cbItems.IsEnabled = false;
                 MainWndDateTimePicker.IsEnabled = false;
                 AmountOfItems.IsEnabled = false;
+                
             }
             catch (Exception ex)
             {
@@ -527,8 +547,9 @@ namespace mainWindow
                     MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
             }
         }
-        #endregion
 
+
+        #endregion
 
 
     }
