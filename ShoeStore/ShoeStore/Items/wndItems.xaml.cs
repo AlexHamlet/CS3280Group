@@ -128,9 +128,10 @@ namespace ShoeStore.Items
         {
             try
             {
-                if (txtCost.Text == null || txtDesc == null)
+                if (txtCost.Text == "" || txtDesc.Text == "")
                 {
-                    txtWarning.Text = "Must fill Cost and Description to Add.";
+                    MessageBox.Show("Must fill Cost and Description to Add.");
+                    
                     return;
                 }
                 ItemsLogic.AddItem(txtCost.Text, txtDesc.Text);
@@ -175,7 +176,12 @@ namespace ShoeStore.Items
         {
             try
             {
-                
+                if (dgItems.SelectedItem == null)
+                {
+                    MessageBox.Show("You must select an Item to delete");
+                    return;
+                }
+
                 DataRowView row = (DataRowView)dgItems.SelectedItem;
                 int code = (int)row[0];
                 ItemsLogic.DeleteItem(code);
