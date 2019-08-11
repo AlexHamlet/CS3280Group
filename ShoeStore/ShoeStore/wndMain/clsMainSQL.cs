@@ -18,7 +18,6 @@ namespace mainWindow
     /// </summary>
     class clsMainSQL
     {
-        ShoeStore.clsDataAccess db;
 
 
         /// <summary>
@@ -26,7 +25,7 @@ namespace mainWindow
         /// </summary>
         public clsMainSQL()
         {
-            db = new ShoeStore.clsDataAccess();
+           
 
         }
 
@@ -36,30 +35,13 @@ namespace mainWindow
         /// <summary>
         /// this returns a all invoices
         /// </summary>
-        public List<clsLineItems> GetItems()
+        public string GetItems()
         {
             try
             {
-                List<clsLineItems> lstItems = new List<clsLineItems>();
 
-                int rows = 0;
                 string SQL = "Select * From ItemDesc";
-                DataSet rawdata = db.ExecuteSQLStatement(SQL, ref rows);
-
-
-                for (int x = 0; x < rows; x++)
-                {
-                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
-
-                    lstItems.Add(new clsLineItems
-                    {
-                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
-                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
-                        Cost = total
-                    });
-                }
-
-                return lstItems;
+                return SQL;
             }
             catch (Exception ex)
             {

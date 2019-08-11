@@ -26,12 +26,20 @@ namespace mainWindow
         /// </summary>
         public clsMainLogic()
         {
-            Query = new clsMainSQL();
-            db = new ShoeStore.clsDataAccess();
+            try
+            {
+                Query = new clsMainSQL();
+                db = new ShoeStore.clsDataAccess();
 
-            //set the max invoices equal to the invoice count + 1
-            Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int x);
-            MAXINVOICES = x + 1;
+                //set the max invoices equal to the invoice count + 1
+                Int32.TryParse(db.ExecuteScalarSQL(Query.GetCountOfInvoices()), out int x);
+                MAXINVOICES = x + 1;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -43,7 +51,27 @@ namespace mainWindow
 
             try
             {
-                return Query.GetItems();
+                List<clsLineItems> lstItems = new List<clsLineItems>();
+
+                int rows = 0;
+
+                DataSet rawdata = db.ExecuteSQLStatement(Query.GetItems(), ref rows);
+
+
+                for (int x = 0; x < rows; x++)
+                {
+                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
+
+                    lstItems.Add(new clsLineItems
+                    {
+                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
+                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
+                        Cost = total
+                    });
+                }
+
+                return lstItems;
+
 
             }
             catch (Exception ex)
@@ -56,31 +84,39 @@ namespace mainWindow
 
         public List<clsLineItems> GetLineItems(int id)
         {
-            List<clsLineItems> lstItems = new List<clsLineItems>();
-
-            int rows = 0;
-
-            string sSQL = Query.getLineItems(id);
-
-            DataSet rawdata = db.ExecuteSQLStatement(sSQL, ref rows);
-
-
-            for (int x = 0; x < rows; x++)
+            try
             {
-                Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
-                Int32.TryParse(rawdata.Tables[0].Rows[x][3].ToString(), out int num);
-                lstItems.Add(new clsLineItems
+                List<clsLineItems> lstItems = new List<clsLineItems>();
+
+                int rows = 0;
+
+                string sSQL = Query.getLineItems(id);
+
+                DataSet rawdata = db.ExecuteSQLStatement(sSQL, ref rows);
+
+
+                for (int x = 0; x < rows; x++)
                 {
-                    ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
-                    ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
-                    Cost = total,
-                    LineItemNum = num
+                    Double.TryParse(rawdata.Tables[0].Rows[x][2].ToString(), out double total);
+                    Int32.TryParse(rawdata.Tables[0].Rows[x][3].ToString(), out int num);
+                    lstItems.Add(new clsLineItems
+                    {
+                        ItemCode = rawdata.Tables[0].Rows[x][0].ToString(),
+                        ItemDesc = rawdata.Tables[0].Rows[x][1].ToString(),
+                        Cost = total,
+                        LineItemNum = num
 
-                });
+                    });
 
+                }
+
+                return lstItems;
             }
-
-            return lstItems;
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType + "." +
+                    MethodInfo.GetCurrentMethod().Name + "->" + ex.Message);
+            }
         }
 
 

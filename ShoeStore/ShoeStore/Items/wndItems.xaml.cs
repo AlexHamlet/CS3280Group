@@ -35,7 +35,7 @@ namespace ShoeStore.Items
         mainWindow.MainWindow main;
 
         /// <summary>
-        /// creatte a dataset object for the datagrid
+        /// create a dataset object for the datagrid
         /// </summary>
         DataSet ds;
 

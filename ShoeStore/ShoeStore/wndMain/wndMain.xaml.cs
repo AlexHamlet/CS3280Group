@@ -76,7 +76,7 @@ namespace mainWindow
 
                 UpdateDisplays();
 
-                ItemsWindow = new wndItems();        //initializes the EditWindow
+                ItemsWindow = new wndItems();        //initializes the ItemsWindow
 
                 SearchWindow = new wndSearch();  //initializes the SearchWindow
 
