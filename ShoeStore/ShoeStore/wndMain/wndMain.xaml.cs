@@ -287,33 +287,34 @@ namespace mainWindow
         {
             try
             {
-                //parse out the date entered on the data grid
-                string date = MainWndDateTimePicker.Text;
+                if (MainWndDateTimePicker.SelectedDate != null && MyList.Count != 0) {
+                    //parse out the date entered on the data grid
+                    string date = MainWndDateTimePicker.Text;
 
-                //parse out the cost they have entered
-                string sCost = TotalCostTextBox.Text;
+                    //parse out the cost they have entered
+                    string sCost = TotalCostTextBox.Text;
 
-                if (TypeOfSave)
-                {
+                    if (TypeOfSave)
+                    {
 
-                    MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
-                    //updates all the invoices added and deleted
-                    MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
+                        MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
+                        //updates all the invoices added and deleted
+                        MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
 
+                    }
+                    else
+                    {
+                        //combo statement calls another function that will add a invoice and will return the new invoices id
+                        MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
+                        InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
+
+                    }
+                    DisableCreation();
+                    EditInvoice.IsEnabled = true;
+                    DeleteInvoice.IsEnabled = true;
+
+                    DisableAllInput();
                 }
-                else
-                {
-                    //combo statement calls another function that will add a invoice and will return the new invoices id
-                    MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
-                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
-
-                }
-                DisableCreation();
-                EditInvoice.IsEnabled = true;
-                DeleteInvoice.IsEnabled = true;
-
-
-                DisableAllInput();
             }
             catch (Exception ex)
             {
