@@ -23,19 +23,19 @@ namespace ShoeStore.Items
     /// </summary>
     public partial class wndItems : Window
     {
+        #region Attributes
         /// <summary>
         /// create an object for the buisness class
         /// </summary>
         clsItemsLogic ItemsLogic;
-
         
-
         /// <summary>
         /// create a dataset object for the datagrid
         /// </summary>
         DataSet ds;
+        #endregion
 
-
+        #region Information updates
         public wndItems()
         {
             try
@@ -70,6 +70,55 @@ namespace ShoeStore.Items
             }
         }
 
+        /// <summary>
+        /// Datagrid selection has changed. get the new information from the selected item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (dgItems.SelectedItem == null)
+                    return;
+                DataRowView rowview = dgItems.SelectedItem as DataRowView;
+                txtCost.Text = rowview[2].ToString();
+                txtDesc.Text = rowview[1].ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Check for digits only on key press
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtCost_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9))
+                {
+                    //Allow the user to use the backspace, delete, tab and enter
+                    if (!(e.Key == Key.Back || e.Key == Key.Delete))
+                    {
+                        //No other keys allowed besides numbers, backspace, delete, tab, and enter
+                        e.Handled = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
+
+        }
+        #endregion
+
+        #region Database buttons
         /// <summary>
         /// add information to the database
         /// </summary>
@@ -126,10 +175,11 @@ namespace ShoeStore.Items
         {
             try
             {
-                string sDeleted;
+                
                 DataRowView row = (DataRowView)dgItems.SelectedItem;
-                sDeleted = ItemsLogic.DeleteItem(row[0].ToString());
-                txtWarning.Text = sDeleted;
+                int code = (int)row[0];
+                ItemsLogic.DeleteItem(code);
+                
                 UpdateDG();
 
             }
@@ -138,28 +188,9 @@ namespace ShoeStore.Items
                 MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
-
-        /// <summary>
-        /// Datagrid selection has changed. get the new information from the selected item
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (dgItems.SelectedItem == null)
-                    return;
-                DataRowView rowview = dgItems.SelectedItem as DataRowView;
-                txtCost.Text = rowview[2].ToString();
-                txtDesc.Text = rowview[1].ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
-            }
-        }
-
+        #endregion
+        
+        #region Closing
         /// <summary>
         /// don't close the window, hide it so the main can show it in the future
         /// </summary>
@@ -179,18 +210,6 @@ namespace ShoeStore.Items
                 MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
-
-        private void txtCost_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key >= Key.D0 && e.Key <= Key.D9)) 
-            {
-                //Allow the user to use the backspace, delete, tab and enter
-                if (!(e.Key == Key.Back || e.Key == Key.Delete ))
-                {
-                    //No other keys allowed besides numbers, backspace, delete, tab, and enter
-                    e.Handled = true;
-                }
-            }
-        }
+        #endregion
     }
 }

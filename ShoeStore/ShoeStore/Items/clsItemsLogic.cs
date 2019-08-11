@@ -10,6 +10,7 @@ namespace ShoeStore.Items
 {
     class clsItemsLogic
     {
+        #region Attributes
         /// <summary>
         /// create a sql class object
         /// </summary>
@@ -19,8 +20,9 @@ namespace ShoeStore.Items
         /// create a dataset object for the datagrid
         /// </summary>
         DataSet ds;
+        #endregion
 
-
+        #region GetDisplays
         public clsItemsLogic()
         {
             query = new clsItemsSQL();
@@ -44,7 +46,9 @@ namespace ShoeStore.Items
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        #endregion
 
+        #region Database Stuff
         /// <summary>
         /// add item to data base from information entered into textboxes
         /// </summary>
@@ -91,20 +95,17 @@ namespace ShoeStore.Items
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public string DeleteItem(string code)
+        public void DeleteItem(int code)
         {
             try
             {
-                int resultCode = 0;
-                Int32.TryParse(code, out resultCode);
-                string test;
-                test = query.DeleteItems(resultCode);
-                return test;
+                query.DeleteItems(code);
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        #endregion
     }
 }
