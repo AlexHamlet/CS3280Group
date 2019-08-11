@@ -7,11 +7,13 @@ using System.Data.OleDb;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 
 namespace ShoeStore.Items
 {
     class clsItemsSQL
     {
+        #region Attributes
         /// <summary>
         /// sql statement string
         /// </summary>
@@ -31,7 +33,9 @@ namespace ShoeStore.Items
         /// create instance of the data access class
         /// </summary>
         ShoeStore.clsDataAccess db;
+        #endregion
 
+        #region Methods
         public clsItemsSQL()
         {
             ds = new DataSet();
@@ -102,29 +106,30 @@ namespace ShoeStore.Items
         /// </summary>
         /// <param name="code"></param>
         /// <returns>coonfirmation of deletion</returns>
-        public string DeleteItems(int code)
+        public void DeleteItems(int code)
         {
             try
             {
-                SQL = "SELECT LI.LineItemNum FROM LineItems as LI " +
+                SQL = "SELECT count(*) FROM LineItems as LI " +
                     "WHERE LI.ItemCode = " + code + "";
-                ds = db.ExecuteSQLStatement(SQL, ref rows);
-                if (rows == 0)
+                string Qrows = db.ExecuteScalarSQL(SQL);
+                if (Qrows == "0")
                 {
                     SQL = "DELETE FROM ItemDesc " +
                         "WHERE ItemCode = " + code + "";
                     int test = db.ExecuteNonQuery(SQL);
-                    return "";
                 }
                 else
-                    return "Item is in an invoice. Can not be deleted";
+                {
+                    MessageBox.Show("Item is in an invoice. Can not be deleted");
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-
+        #endregion
 
     }
 }

@@ -138,9 +138,17 @@ namespace ShoeStore.Search
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //this.SelectedInvoice = null;
-            e.Cancel = true;
-            this.Hide();
+            try
+            {
+                //this.SelectedInvoice = null;
+                e.Cancel = true;
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
         }
 
         /// <summary>
@@ -165,17 +173,20 @@ namespace ShoeStore.Search
         }
 
         /// <summary>
-        /// Refresh Datagrid on show
+        /// Refreshes the datagrid on show
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             try
             {
-                cmbbxInvDate.SelectedIndex = -1;
-                cmbbxInvNum.SelectedIndex = -1;
-                cmbbxInvTot.SelectedIndex = -1;
+                if (e.NewValue.ToString().Equals("True"))
+                {
+                    cmbbxInvDate.SelectedIndex = -1;
+                    cmbbxInvNum.SelectedIndex = -1;
+                    cmbbxInvTot.SelectedIndex = -1;
+                }
             }
             catch (Exception ex)
             {
