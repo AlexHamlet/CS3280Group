@@ -18,7 +18,8 @@
         <Label Content="Invoice Date" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cmbbxInvTot" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CmbbxInvNum_SelectionChanged"/>
         <Label Content="Total Charge" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top"/>
-      </Grid>
+                <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="29,209,0,0" VerticalAlignment="Top" Width="75" Click="BtnClear_Click"/>
+            </Grid>
     </GroupBox>
     <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Margin="286,263,0,0" VerticalAlignment="Top" Width="75" Click="BtnSelect_Click"/>
     <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="417,263,0,0" VerticalAlignment="Top" Width="75" Click="BtnCancel_Click"/>

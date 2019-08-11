@@ -118,7 +118,11 @@ namespace ShoeStore.Search
                     date = querydate.Substring(0, querydate.IndexOf(' '));
                 }
                 bool andflag = false;
-                string SQL = "Select * From Invoices Where";
+                string SQL = "Select * From Invoices";
+                if(num != "" || date != "" || tot != "")
+                {
+                    SQL += " Where";
+                }
                 if (!num.Equals(""))
                 {
                     SQL += " InvoiceNum=" + num;

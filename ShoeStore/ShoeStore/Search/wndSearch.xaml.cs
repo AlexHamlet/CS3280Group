@@ -133,8 +133,24 @@ namespace ShoeStore.Search
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            //this.SelectedInvoice = null;
             e.Cancel = true;
             this.Hide();
+        }
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cmbbxInvDate.SelectedIndex = -1;
+                cmbbxInvNum.SelectedIndex = -1;
+                cmbbxInvTot.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
         }
     }
 }
