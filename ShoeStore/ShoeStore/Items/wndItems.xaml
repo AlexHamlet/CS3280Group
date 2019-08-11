@@ -11,7 +11,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="dgItems" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="210" Margin="10,23,0,0" VerticalAlignment="Top" Width="387" ItemsSource="{Binding}" SelectionChanged="dgItems_SelectionChanged"/>
+        <DataGrid Name="dgItems" AutoGenerateColumns="True" HorizontalAlignment="Left" Height="210" Margin="10,23,0,0" VerticalAlignment="Top" Width="387" ItemsSource="{Binding}" SelectionChanged="dgItems_SelectionChanged" IsReadOnly="True"/>
         <Button x:Name="btnAdd" Content="Add" Margin="322,242,48,0" Click="btnAdd_Click" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="btnEdit" Content="Edit" Margin="322,277,48,0" Click="btnEdit_Click" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="btnDelete" Content="Delete" Margin="322,311,48,0" VerticalAlignment="Top" Height="20" Click="btnDelete_Click"/>
