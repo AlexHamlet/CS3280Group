@@ -85,7 +85,6 @@ namespace mainWindow
 
                 ItemsWindow = new wndItems();        //initializes the ItemsWindow
 
-                SearchWindow = new wndSearch();  //initializes the SearchWindow
 
                 //disables editing/deleting/saving until there is something to save
                 EditInvoice.IsEnabled = false;
@@ -197,6 +196,8 @@ namespace mainWindow
         {
             try
             {
+                SearchWindow = new wndSearch();  //initializes the SearchWindow
+
 
                 this.Hide();
                 SearchWindow.ShowDialog();
@@ -204,7 +205,11 @@ namespace mainWindow
 
                 DeleteInvoice.IsEnabled = true;
                 EditInvoice.IsEnabled = true;
-
+                MyList.Clear();
+                AmountOfItems.Text = "";
+                cbItems.SelectedIndex = -1;
+                DisableAllInput();
+                SaveInvoice.IsEnabled = false;
                 //check if it has been closed but nothing has been selected
                 if (SearchWindow.SelectedInvoice != null)
                 {
@@ -237,9 +242,14 @@ namespace mainWindow
         {
             try
             {
+
                 this.Hide();
                 ItemsWindow.ShowDialog();
                 this.Show();
+                AmountOfItems.Text = "";
+                cbItems.SelectedIndex = -1;
+                SaveInvoice.IsEnabled = false;
+                DisableAllInput();
                 UpdateDisplays();
             }
             catch (Exception ex)
@@ -489,6 +499,7 @@ namespace mainWindow
                 dgAll_Items.IsEnabled = false;
                 cbItems.IsEnabled = false;
                 MainWndDateTimePicker.IsEnabled = false;
+                AmountOfItems.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -508,6 +519,7 @@ namespace mainWindow
                 dgAll_Items.IsEnabled = true;
                 cbItems.IsEnabled = true;
                 MainWndDateTimePicker.IsEnabled = true;
+                AmountOfItems.IsEnabled = true;
             }
             catch (Exception ex)
             {
