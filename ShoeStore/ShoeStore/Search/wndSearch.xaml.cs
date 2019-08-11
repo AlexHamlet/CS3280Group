@@ -138,9 +138,17 @@ namespace ShoeStore.Search
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //this.SelectedInvoice = null;
-            e.Cancel = true;
-            this.Hide();
+            try
+            {
+                //this.SelectedInvoice = null;
+                e.Cancel = true;
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
         }
 
         /// <summary>
