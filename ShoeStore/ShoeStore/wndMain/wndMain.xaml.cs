@@ -85,7 +85,6 @@ namespace mainWindow
 
                 ItemsWindow = new wndItems();        //initializes the ItemsWindow
 
-                SearchWindow = new wndSearch();  //initializes the SearchWindow
 
                 //disables editing/deleting/saving until there is something to save
                 EditInvoice.IsEnabled = false;
@@ -197,6 +196,8 @@ namespace mainWindow
         {
             try
             {
+                SearchWindow = new wndSearch();  //initializes the SearchWindow
+
 
                 this.Hide();
                 SearchWindow.ShowDialog();
@@ -204,7 +205,11 @@ namespace mainWindow
 
                 DeleteInvoice.IsEnabled = true;
                 EditInvoice.IsEnabled = true;
-
+                MyList.Clear();
+                AmountOfItems.Text = "";
+                cbItems.SelectedIndex = -1;
+                DisableAllInput();
+                SaveInvoice.IsEnabled = false;
                 //check if it has been closed but nothing has been selected
                 if (SearchWindow.SelectedInvoice != null)
                 {
@@ -237,9 +242,14 @@ namespace mainWindow
         {
             try
             {
+
                 this.Hide();
                 ItemsWindow.ShowDialog();
                 this.Show();
+                AmountOfItems.Text = "";
+                cbItems.SelectedIndex = -1;
+                SaveInvoice.IsEnabled = false;
+                DisableAllInput();
                 UpdateDisplays();
             }
             catch (Exception ex)
@@ -287,33 +297,34 @@ namespace mainWindow
         {
             try
             {
-                //parse out the date entered on the data grid
-                string date = MainWndDateTimePicker.Text;
+                if (MainWndDateTimePicker.SelectedDate != null && MyList.Count != 0) {
+                    //parse out the date entered on the data grid
+                    string date = MainWndDateTimePicker.Text;
 
-                //parse out the cost they have entered
-                string sCost = TotalCostTextBox.Text;
+                    //parse out the cost they have entered
+                    string sCost = TotalCostTextBox.Text;
 
-                if (TypeOfSave)
-                {
+                    if (TypeOfSave)
+                    {
 
-                    MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
-                    //updates all the invoices added and deleted
-                    MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
+                        MainLogic.UpdateInvoice(MyInvoice.InvoiceID, date, sCost);
+                        //updates all the invoices added and deleted
+                        MainLogic.UpdateLineItems(MyInvoice.InvoiceID, MyList);
 
+                    }
+                    else
+                    {
+                        //combo statement calls another function that will add a invoice and will return the new invoices id
+                        MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
+                        InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
+
+                    }
+                    DisableCreation();
+                    EditInvoice.IsEnabled = true;
+                    DeleteInvoice.IsEnabled = true;
+
+                    DisableAllInput();
                 }
-                else
-                {
-                    //combo statement calls another function that will add a invoice and will return the new invoices id
-                    MyInvoice.InvoiceID = MainLogic.CreateInvoice(date, sCost, MyList);
-                    InvoiceIdLabel.Content = "Invoice ID: " + MyInvoice.InvoiceID;
-
-                }
-                DisableCreation();
-                EditInvoice.IsEnabled = true;
-                DeleteInvoice.IsEnabled = true;
-
-
-                DisableAllInput();
             }
             catch (Exception ex)
             {
@@ -488,6 +499,7 @@ namespace mainWindow
                 dgAll_Items.IsEnabled = false;
                 cbItems.IsEnabled = false;
                 MainWndDateTimePicker.IsEnabled = false;
+                AmountOfItems.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -507,6 +519,7 @@ namespace mainWindow
                 dgAll_Items.IsEnabled = true;
                 cbItems.IsEnabled = true;
                 MainWndDateTimePicker.IsEnabled = true;
+                AmountOfItems.IsEnabled = true;
             }
             catch (Exception ex)
             {
