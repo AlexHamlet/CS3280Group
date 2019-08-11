@@ -9,21 +9,18 @@ namespace ShoeStore.Search
 {
     public class clsInvoice
     {
-        private int id;
-        private string date;
-        private double total;
         /// <summary>
         /// Contains the InvoiceID of the Invoice Object
         /// </summary>
-        public int InvoiceID { get { return id; } set => this.id = value; }
+        public int InvoiceID { get; set; }
         /// <summary>
         /// Contains the InvoiceDate of the Invoice Object
         /// </summary>
-        public string InvoiceDate { get { return date; } }
+        public string InvoiceDate { get;  set; }
         /// <summary>
         /// Contains the InvoiceTotal of the Invoice Object
         /// </summary>
-        public double InvoiceTotal { get { return total; } }
+        public double InvoiceTotal { get; set; }
 
         /// <summary>
         /// Initializes the Invoice Object
@@ -35,9 +32,9 @@ namespace ShoeStore.Search
         {
             try
             {
-                this.id = id;
-                this.date = date;
-                this.total = total;
+                InvoiceID = id;
+                InvoiceDate = date;
+                InvoiceTotal = total;
             }
             catch (Exception ex)
             {

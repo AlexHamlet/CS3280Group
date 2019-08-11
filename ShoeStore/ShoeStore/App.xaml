@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ShoeStore"
              StartupUri="wndMain\wndMain.xaml">
     <Application.Resources>
-         
+            
     </Application.Resources>
 </Application>

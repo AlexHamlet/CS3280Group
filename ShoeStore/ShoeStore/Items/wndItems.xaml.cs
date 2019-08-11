@@ -42,13 +42,19 @@ namespace ShoeStore.Items
 
         public wndItems()
         {
-            InitializeComponent();
-            ItemsLogic = new clsItemsLogic();
-            main = mainWindow.MainWindow.main;
-            ds = new DataSet();
-            UpdateDG();
-
-        }
+            try
+            {
+                InitializeComponent();
+                ItemsLogic = new clsItemsLogic();
+                main = mainWindow.MainWindow.main;
+                ds = new DataSet();
+                UpdateDG();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Items Window could not be opened\n" + ex.ToString());
+            }
+}
 
         /// <summary>
         /// function to update the datagrid information
@@ -65,7 +71,7 @@ namespace ShoeStore.Items
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
 
@@ -88,7 +94,7 @@ namespace ShoeStore.Items
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
 
@@ -108,7 +114,7 @@ namespace ShoeStore.Items
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
 
@@ -128,7 +134,7 @@ namespace ShoeStore.Items
             }
             catch (Exception ex)
             {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
 
@@ -139,11 +145,18 @@ namespace ShoeStore.Items
         /// <param name="e"></param>
         private void dgItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgItems.SelectedItem == null)
-                return;
-            DataRowView rowview = dgItems.SelectedItem as DataRowView;
-            txtCost.Text = rowview[2].ToString();
-            txtDesc.Text = rowview[1].ToString();
+            try
+            {
+                if (dgItems.SelectedItem == null)
+                    return;
+                DataRowView rowview = dgItems.SelectedItem as DataRowView;
+                txtCost.Text = rowview[2].ToString();
+                txtDesc.Text = rowview[1].ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
         }
 
         /// <summary>
@@ -153,9 +166,17 @@ namespace ShoeStore.Items
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = true;
-            this.Hide();
-            //main.Show();
+            try
+            {
+                e.Cancel = true;
+                this.Hide();
+                //main.Show();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
         }
     }
 }
