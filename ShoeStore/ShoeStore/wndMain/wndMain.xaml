@@ -11,8 +11,10 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Items" HorizontalAlignment="Left" Height="170" Margin="22,173,0,0" VerticalAlignment="Top" Width="615">
-            <Label x:Name="TotalCostLabel" Content="Total Cost: " HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-0.2"/>
+
+
+        <GroupBox Header="Items" HorizontalAlignment="Left" Height="170" Margin="22,174,0,0" VerticalAlignment="Top" Width="615">
+            <Label x:Name="QuantityLabel" Content="Quantity:" HorizontalAlignment="Left" Margin="18,57,0,0" VerticalAlignment="Top"/>
         </GroupBox>
 
 
@@ -27,10 +29,11 @@
         <DatePicker x:Name="MainWndDateTimePicker" HorizontalAlignment="Left" Margin="145,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.029,1.042"/>
         <Label x:Name="InvoiceIdLabel" Content="InvoiceId" HorizontalAlignment="Left" Margin="22,67,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.658,-0.192"/>
         <ComboBox x:Name="cbItems" HorizontalAlignment="Left" Margin="30,205,0,0" VerticalAlignment="Top" Width="185"/>
-        <TextBox x:Name="AmountOfItems" HorizontalAlignment="Left" Height="23" Margin="30,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185"/>
+        <TextBox x:Name="AmountOfItems" HorizontalAlignment="Left" Height="23" Margin="110,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105"/>
         <Button x:Name="SaveItem" Content="Add Item" HorizontalAlignment="Left" Margin="540,247,0,0" VerticalAlignment="Top" Width="75" Click="SaveItem_Click"/>
         <Button x:Name="SaveInvoice" Content="Save Invoice" HorizontalAlignment="Left" Margin="360,107,0,0" VerticalAlignment="Top" Width="75" IsTabStop="False" RenderTransformOrigin="0.067,0" Click="SaveInvoice_Click"/>
         <TextBox x:Name="TotalCostTextBox" HorizontalAlignment="Left" Height="23" Margin="110,292,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Label x:Name="TotalCostLabel" Content="Total Cost: " HorizontalAlignment="Left" Margin="42,292,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>

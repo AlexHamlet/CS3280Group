@@ -298,7 +298,7 @@ namespace mainWindow
                 EditInvoice.IsEnabled = true;
 
                 //check if it has been closed but nothing has been selected
-                if (SearchWindow.SelectedInvoice.InvoiceID != 0)
+                if (SearchWindow.SelectedInvoice != null)
                 {
 
                     MyInvoice = SearchWindow.SelectedInvoice;
@@ -351,7 +351,7 @@ namespace mainWindow
                 Int32.TryParse(AmountOfItems.Text, out int x);
                 Item.LineItemNum = x;
                 MyList.Add(Item);
-
+                MyInvoice.InvoiceDate = MainWndDateTimePicker.Text;
                 UpdateDisplays();
 
 

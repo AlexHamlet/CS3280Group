@@ -144,8 +144,8 @@ namespace mainWindow
             {
 
 
-                string sSQL = "UPDATE Invoices SET InvoiceDate = '"+ date + "' TotalCost = " + cost 
-                              + "WHERE InvoiceNum = " +id.ToString() + ";";
+                string sSQL = "UPDATE Invoices SET InvoiceDate = " + date + ", TotalCost = " + cost 
+                              + " WHERE InvoiceNum = " +id.ToString() + ";";
                 return sSQL;
 
 
