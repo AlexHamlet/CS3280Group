@@ -163,5 +163,25 @@ namespace ShoeStore.Search
                 MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
             }
         }
+
+        /// <summary>
+        /// Refresh Datagrid on show
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                cmbbxInvDate.SelectedIndex = -1;
+                cmbbxInvNum.SelectedIndex = -1;
+                cmbbxInvTot.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something Went Wrong!\n" + ex.ToString());
+            }
+        }
     }
 }
